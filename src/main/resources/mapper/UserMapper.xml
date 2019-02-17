@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.lfs.mall.dao.UserMapper">
+    <resultMap id="user" type="com.lfs.mall.domain.User">
+        <result property="id" column="Fid"/>
+        <result property="username" column="Fusername"/>
+        <result property="password" column="Fpassword"/>
+        <result property="sex" column="Fsex"/>
+        <result property="email" column="Femail"/>
+        <result property="phone" column="Fphone"/>
+        <result property="created" column="Fcreated"/>
+        <result property="updated" column="Fupdated"/>
+    </resultMap>
+
+    <select id="getUser" resultMap="user" parameterType="com.lfs.mall.domain.User">
+        select *
+        from t_user
+        where 1=1
+            <if test="id != null"> and Fid = #{id}</if>
+            <if test="username != null"> and Fusername = #{username}</if>
+            <if test="password != null"> and Fpassword = #{password}</if>
+            <if test="sex != null"> and Fsex = #{sex}</if>
+            <if test="email != null"> and Femail = #{email}</if>
+            <if test="phone != null"> and Fphone = #{phone}</if>
+    </select>
+</mapper>

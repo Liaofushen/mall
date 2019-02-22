@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.lfs.mall.dao.CommodityMapper">
+    <resultMap id="commodity" type="com.lfs.mall.domain.Commodity">
+        <result property="id" column="Fid"/>
+        <result property="categoryId" column="Fcategory_id"/>
+        <result property="title" column="Ftitle"/>
+        <result property="sellPoint" column="Fsell_point"/>
+        <result property="desc" column="Fdesc"/>
+        <result property="price" column="Fprice"/>
+        <result property="num" column="Fnum"/>
+        <result property="barcode" column="Fbarcode"/>
+        <result property="image" column="Fimage"/>
+        <result property="status" column="Fstatus"/>
+        <result property="weight" column="Fweight"/>
+        <result property="colour" column="Fcolour"/>
+        <result property="size" column="Fsize"/>
+        <result property="created" column="Fcreated"/>
+        <result property="updated" column="Fupdated"/>
+    </resultMap>
+
+    <sql id="common_where">
+        where 1=1
+        <if test="id != null">and Fid=#{id}</if>
+        <if test="categoryId != null">and Fcategory_id=#{categoryId}</if>
+        <if test="title != null">and Ftitle=#{title}</if>
+        <if test="sellPoint != null">and Fsell_point=#{sellPoint}</if>
+        <if test="desc != null">and Fdesc=#{desc}</if>
+        <if test="price != null">and Fprice=#{price}</if>
+        <if test="num != null">and Fnum=#{num}</if>
+        <if test="barcode != null">and Fbarcode=#{barcode}</if>
+        <if test="image != null">and Fimage=#{image}</if>
+        <if test="status != null">and Fstatus=#{status}</if>
+        <if test="weight != null">and Fweight=#{weight}</if>
+        <if test="colour != null">and Fcolour=#{colour}</if>
+        <if test="size != null">and Fsize=#{size}</if>
+        <if test="created != null">and Fcreated=#{created}</if>
+        <if test="updated != null">and Fupdated=#{updated}</if>
+    </sql>
+
+    <select id="getCommodity" resultMap="commodity" parameterType="com.lfs.mall.dao.CommodityMapper">
+        select *
+        from mall_db.t_commodity
+        <include refid="common_where"/>
+    </select>
+
+    <update id="updateCommodity" parameterType="com.lfs.mall.dao.CommodityMapper">
+        update mall_db.t_commodity
+        <set>
+            <if test="id != null">Fid=#{id},</if>
+            <if test="categoryId != null">Fcategory_id=#{categoryId},</if>
+            <if test="title != null">Ftitle=#{title},</if>
+            <if test="sellPoint != null">Fsell_point=#{sellPoint},</if>
+            <if test="desc != null">Fdesc=#{desc},</if>
+            <if test="price != null">Fprice=#{price},</if>
+            <if test="num != null">Fnum=#{num},</if>
+            <if test="barcode != null">Fbarcode=#{barcode},</if>
+            <if test="image != null">Fimage=#{image},</if>
+            <if test="status != null">Fstatus=#{status},</if>
+            <if test="weight != null">Fweight=#{weight},</if>
+            <if test="colour != null">Fcolour=#{colour},</if>
+            <if test="size != null">Fsize=#{size},</if>
+            <if test="created != null">Fcreated=#{created},</if>
+            Fupdated=now()
+        </set>
+        <include refid="common_where"/>
+    </update>
+
+    <insert id="addCommodity" parameterType="com.lfs.mall.dao.CommodityMapper">
+        INSERT INTO mall_db.t_commodity (
+            Fid,
+            Fcategory_id,
+            Ftitle,
+            Fsell_point,
+            Fdesc,
+            Fprice,
+            Fnum,
+            Fbarcode,
+            Fimage,
+            Fstatus,
+            Fweight,
+            Fstatus,
+            Fcolour,
+            Fsize,
+            Fcreated,
+            Fupdated
+        ) VALUES (
+            #{id},
+            #{categoryId},
+            #{title},
+            #{sellPoint},
+            #{desc},
+            #{price},
+            #{num},
+            #{barcode},
+            #{imgage},
+            #{status},
+            #{weight},
+            #{status},
+            #{colour},
+            #{size},
+            now(),
+            now()
+        )
+    </insert>
+</mapper>

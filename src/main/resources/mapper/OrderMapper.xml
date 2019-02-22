@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.lfs.mall.dao.OrderMapper">
+    <resultMap id="order" type="com.lfs.mall.domain.Order">
+        <result property="id" column="Fid"/>
+        <result property="userId" column="Fuser_id"/>
+        <result property="receiveAddrId" column="Freceive_addr_id"/>
+        <result property="weightSum" column="Fweight_sum"/>
+        <result property="priceSum" column="Fprice_sum"/>
+        <result property="status" column="Fstatus"/>
+        <result property="created" column="Fcreated"/>
+        <result property="updated" column="Fupdated"/>
+    </resultMap>
+
+    <sql id="common_where">
+        where 1=1
+        <if test="id != null">and Fid=#{id}</if>
+        <if test="userId != null">and Fuser_id=#{userId}</if>
+        <if test="receiveAddrId != null">and Freceive_addr_id=#{receiveAddrId}</if>
+        <if test="weightSum != null">and Fweight_sum=#{weightSum}</if>
+        <if test="priceSum != null">and Fprice_sum=#{priceSum}</if>
+        <if test="status != null">and Fstatus=#{status}</if>
+        <if test="created != null">and Fcreated=#{created}</if>
+        <if test="updated != null">and Fupdated=#{updated}</if>
+    </sql>
+
+    <insert id="addOrder" parameterType="com.lfs.mall.domain.Order">
+        INSERT INTO mall_db.t_order (
+            Fid,
+            Fuser_id,
+            Freceive_addr_id,
+            Fweight_sum,
+            Fprice_sum,
+            Fstatus,
+            Fcreated,
+            Fupdated
+        ) VALUES (
+            #{id},
+            #{userId},
+            #{receiveAddrId},
+            #{weightSum},
+            #{priceSum},
+            #{status},
+            now(),
+            now()
+        )
+    </insert>
+
+    <update id="updateOrder" parameterType="com.lfs.mall.domain.Order">
+        update mall_db.t_order
+        <set>
+            <if test="id != null">Fid=#{id},</if>
+            <if test="userId != null">Fuser_id=#{userId},</if>
+            <if test="receiveAddrId != null">Freceive_addr_id=#{receiveAddrId},</if>
+            <if test="weightSum != null">Fweight_sum=#{weightSum},</if>
+            <if test="priceSum != null">Fprice_sum=#{priceSum},</if>
+            <if test="status != null">Fstatus=#{status},</if>
+            <if test="created != null">Fcreated=#{created},</if>
+            Fupdated=now()
+        </set>
+        <include refid="common_where"/>
+    </update>
+
+    <select id="getOrder" resultMap="order" parameterType="com.lfs.mall.domain.Order">
+        select *
+        from mall_db.t_order
+        <include refid="common_where"/>
+    </select>
+</mapper>

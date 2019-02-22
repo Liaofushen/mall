@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.lfs.mall.dao.OrderItemMapper">
+    <resultMap id="orderItem" type="com.lfs.mall.domain.OrderItem">
+        <result property="id" column="Fid"/>
+    </resultMap>
+
+    <insert id="addOrderItem" parameterType="com.lfs.mall.domain.OrderItem">
+
+    </insert>
+
+    <select id="getOrderItem" parameterType="com.lfs.mall.domain.OrderItem" resultMap="orderItem">
+
+    </select>
+
+    <update id="updateOrderItem" parameterType="com.lfs.mall.domain.OrderItem">
+
+    </update>
+</mapper>

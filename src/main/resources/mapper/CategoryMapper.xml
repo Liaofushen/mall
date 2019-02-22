@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.lfs.mall.dao.CategoryMapper">
+    <resultMap id="category" type="com.lfs.mall.domain.Category">
+        <result property="id" column="Fid"/>
+        <result property="name" column="Fname"/>
+        <result property="level" column="Flevel"/>
+        <result property="created" column="Fcreated"/>
+        <result property="updated" column="Fupdated"/>
+    </resultMap>
+
+    <!--<sql id="common_where">-->
+        <!--where 1=1-->
+          <!--<if test="Fid != null">and Fid=#{id}</if>-->
+          <!--<if test="Fname != null">and Fname=#{name}</if>-->
+          <!--<if test="Flevel != null">and Flevel=#{level}</if>-->
+          <!--<if test="Fcreated != null">and Fcreated=#{created}</if>-->
+          <!--<if test="Fupdated != null">and Fupdated=#{updated}</if>-->
+    <!--</sql>-->
+
+    <select id="getCategory" resultMap="category">
+        select *
+        from mall_db.t_category
+    </select>
+
+</mapper>

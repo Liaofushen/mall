@@ -1,6 +1,6 @@
 package com.lfs.mall.dao;
 
-import com.lfs.mall.domain.User;
+import com.lfs.mall.domain.Order;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -8,10 +8,10 @@ import java.util.List;
 
 @Mapper
 @Repository
-public interface UserMapper {
-    List<User> getUser(User user);
+public interface OrderMapper {
+    void addOrder(Order order);
 
-    void addUser(User user);
+    void updateOrder(Order order);
 
-    void updateUser(User user);
+    List<Order> getOrder(Order order);
 }

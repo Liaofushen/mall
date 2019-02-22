@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.lfs.mall.dao.ReceiveAddrMapper">
+    <resultMap id="receiveAddr" type="com.lfs.mall.domain.ReceiveAddr">
+        <result property="id" column="Fid"/>
+        <result property="userId" column="Fuser_id"/>
+        <result property="receiverName" column="Freceiver_name"/>
+        <result property="phone" column="Fphone"/>
+        <result property="zipCode" column="Fzip_code"/>
+        <result property="province" column="Fprovince"/>
+        <result property="city" column="Fcity"/>
+        <result property="county" column="Fcounty"/>
+        <result property="addr" column="Faddr"/>
+        <result property="created" column="Fcreated"/>
+        <result property="updated" column="Fupdated"/>
+    </resultMap>
+
+    <sql id="common_where">
+        where 1=1
+        <if test="id != null">and Fid=#{id}</if>
+        <if test="userId != null">and Fuser_id=#{userId}</if>
+        <if test="receiverName != null">and Freceicer_name=#{receicerName}</if>
+        <if test="phone != null">and Fphone=#{phone}</if>
+        <if test="zipCode != null">and Fzip_code=#{zipCode}</if>
+        <if test="province != null">and Fprocince=#{procince}</if>
+        <if test="city != null">and Fcity=#{city}</if>
+        <if test="county != null">and Fcounty=#{county}</if>
+        <if test="addr != null">and Faddr=#{addr}</if>
+        <if test="created != null">and Fcreated=#{created}</if>
+        <if test="updated != null">and Fupdated=#{updated}</if>
+    </sql>
+
+    <insert id="addReceiveAddr" parameterType="com.lfs.mall.domain.ReceiveAddr">
+        insert into mall_db.t_receive_addr(
+          Fid,
+          Fuser_id,
+          Freceiver_name,
+          Fphone,
+          Fzip_code,
+          Fprovince,
+          Fcity,
+          Fcounty,
+          Faddr,
+          Fcreated,
+          Fupdated
+        ) values (
+          #{id},
+          #{userId},
+          #{receiveName},
+          #{phone},
+          #{zipCode},
+          #{province},
+          #{city},
+          #{county},
+          #{addr},
+          now(),
+          now()
+        )
+    </insert>
+
+    <update id="updateReceiveAddr" parameterType="com.lfs.mall.domain.ReceiveAddr">
+        update mall_db.t_receive_addr
+        <set>
+            <if test="id != null">Fid=#{id},</if>
+            <if test="userId != null"> Fuser_id=#{userId},</if>
+            <if test="receiverName != null"> Freceicer_name=#{receicerName},</if>
+            <if test="phone != null"> Fphone=#{phone},</if>
+            <if test="zipCode != null"> Fzip_code=#{zipCode},</if>
+            <if test="province != null"> Fprocince=#{procince},</if>
+            <if test="city != null"> Fcity=#{city},</if>
+            <if test="county != null"> Fcounty=#{county},</if>
+            <if test="addr != null"> Faddr=#{addr},</if>
+            <if test="created != null"> Fcreated=#{created},</if>
+            Fupdated=now()
+        </set>
+        <include refid="common_where"/>
+    </update>
+</mapper>

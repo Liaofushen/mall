@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.lfs.mall.dao.ManagerMapper">
+    <resultMap id="manager" type="com.lfs.mall.domain.Manager">
+        <result property="id" column="Fid"/>
+        <result property="managerName" column="Fmanager_name"/>
+        <result property="password" column="Fpassword"/>
+        <result property="created" column="Fcreated"/>
+        <result property="updated" column="Fupdated"/>
+    </resultMap>
+
+    <sql id="common_where">
+        where 1=1
+        <if test="id != null">and Fid=#{id}</if>
+        <if test="managerName != null">and Fmanager_name=#{managerName}</if>
+        <if test="password != null">and Fpassword=#{password}</if>
+        <if test="created != null">and Fcreated=#{created}</if>
+        <if test="updated != null">and Fupdated=#{updated}</if>
+    </sql>
+
+    <insert id="addManager" parameterType="com.lfs.mall.domain.Manager">
+        INSERT INTO mall_db.t_manager (
+            Fid,
+            Fmanager_name,
+            Fpassword,
+            Fcreated,
+            Fupdated
+        ) VALUES (
+            #{id},
+            #{managerName},
+            #{password},
+            now(),
+            now()
+        )
+    </insert>
+
+    <select id="getManager" parameterType="com.lfs.mall.domain.Manager" resultMap="manager">
+        SELECT *
+        FROM mall_db.t_manager
+        <include refid="common_where"/>
+    </select>
+
+    <update id="updateManager" parameterType="com.lfs.mall.domain.Manager">
+        UPDATE mall_db.t_manager
+        <set>
+            <if test="id != null">Fid=#{id},</if>
+            <if test="managerName != null">Fmanager_name=#{managerName},</if>
+            <if test="password != null">Fpassword=#{password},</if>
+            <if test="created != null">Fcreated=#{created},</if>
+            Fupdated=now()
+        </set>
+        <include refid="common_where"/>
+    </update>
+</mapper>

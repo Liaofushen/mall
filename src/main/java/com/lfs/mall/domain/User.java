@@ -37,6 +37,8 @@ public class User implements Serializable {
 
     private String phone;
 
+    private Integer status;
+
     private Date created;
 
     private Date updated;

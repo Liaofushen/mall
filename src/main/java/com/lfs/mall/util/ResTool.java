@@ -12,11 +12,11 @@ import lombok.Setter;
  */
 public class ResTool {
 
-    public static <T> String success (T t) {
+    public static <T> String success(T data) {
         Result<T> result = new Result<>();
         result.setStatus(0);
         result.setMsg("成功");
-        result.setData(t);
+        result.setData(data);
         return JsonTool.toJsonString(result);
     }
 

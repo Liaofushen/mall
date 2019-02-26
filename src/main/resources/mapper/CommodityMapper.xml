@@ -45,6 +45,13 @@
         <include refid="common_where"/>
     </select>
 
+    <select id="getCommodityLikeName" resultMap="commodity" parameterType="java.lang.String">
+        <bind name="likeName" value="'%'+name+'%'"/>
+        select *
+        from mall_db.t_commodity
+        where Ftitle like #{likeName}
+    </select>
+
     <update id="updateCommodity" parameterType="com.lfs.mall.dao.CommodityMapper">
         update mall_db.t_commodity
         <set>

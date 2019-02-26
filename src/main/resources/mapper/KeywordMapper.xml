@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.lfs.mall.dao.KeywordMapper">
+    <resultMap id="keyword" type="com.lfs.mall.domain.Keyword">
+        <result column="Fid" property="id"/>
+        <result column="Fcategory_id" property="categoryId"/>
+        <result column="Fname" property="name"/>
+        <result column="Furl" property="url"/>
+        <result column="Fimg" property="img"/>
+    </resultMap>
+
+    <select id="getKeyword" resultMap="keyword">
+        select *
+        from mall_db.t_keyword
+    </select>
+</mapper>

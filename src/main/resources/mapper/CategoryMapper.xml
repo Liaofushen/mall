@@ -24,4 +24,11 @@
         from mall_db.t_category
     </select>
 
+    <select id="getCategoryById" resultMap="category" parameterType="java.lang.Integer">
+        select *
+        from mall_db.t_category
+        where Fid=#{id}
+    </select>
+
+
 </mapper>

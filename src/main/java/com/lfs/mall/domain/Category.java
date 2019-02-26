@@ -1,5 +1,6 @@
 package com.lfs.mall.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -12,7 +13,6 @@ import java.util.Date;
  * Modified By :
  * Description : 目录
  *
- * @Version 2019/2/21
  */
 @Getter
 @Setter
@@ -22,6 +22,8 @@ public class Category implements Serializable {
     private Integer id;
     private String name;
     private Integer level;
+    @JsonIgnore
     private Date created;
+    @JsonIgnore
     private Date updated;
 }

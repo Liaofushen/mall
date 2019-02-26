@@ -1,6 +1,6 @@
 package com.lfs.mall;
 
-import com.lfs.mall.util.JsonTool;
+import com.lfs.mall.util.JsonUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ import java.util.List;
  * Modified By :
  * Description :
  *
- * @Version 2019/2/22
+ * Version 2019/2/22
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -40,7 +40,7 @@ public class DataSourceTest {
         //执行SQL,输出查到的数据
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         List<?> resultList = jdbcTemplate.queryForList("select * from mall_db.t_user");
-        System.out.println("===>>>>>>>>>>>" + JsonTool.toJsonString(resultList));
+        System.out.println("===>>>>>>>>>>>" + JsonUtil.toJsonString(resultList));
 
     }
 }

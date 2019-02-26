@@ -1,5 +1,6 @@
 package com.lfs.mall.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -12,7 +13,7 @@ import java.util.Date;
  * Modified By :
  * Description : 商品评论
  *
- * @Version 2019/2/21
+ * Version 2019/2/21
  */
 @Getter
 @Setter
@@ -23,6 +24,8 @@ public class Comment implements Serializable {
     private Integer commodityId;
     private String desc;
     private Integer starLevel;
+    @JsonIgnore
     private Date created;
+    @JsonIgnore
     private Date updated;
 }

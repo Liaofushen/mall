@@ -1,5 +1,6 @@
 package com.lfs.mall.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -13,7 +14,7 @@ import java.util.Date;
  * Modified By :
  * Description : 订单
  *
- * @Version 2019/2/21
+ * Version 2019/2/21
  */
 @Setter
 @Getter
@@ -26,6 +27,8 @@ public class Order implements Serializable {
     private BigInteger weightSum;
     private BigInteger priceSum;
     private Integer status;
+    @JsonIgnore
     private Date created;
+    @JsonIgnore
     private Date updated;
 }

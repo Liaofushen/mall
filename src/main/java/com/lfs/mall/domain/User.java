@@ -1,10 +1,9 @@
 package com.lfs.mall.domain;
 
-import com.lfs.mall.util.JsonTool;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.codehaus.jackson.map.ObjectMapper;
 
 
 import java.io.Serializable;
@@ -16,7 +15,7 @@ import java.util.Date;
  * Modified By :
  * Description : 用户PO
  *
- * @Version 2019/2/14
+ * Version 2019/2/14
  */
 @Getter
 @Setter
@@ -29,6 +28,7 @@ public class User implements Serializable {
 
     private String username;
 
+
     private String password;
 
     private Boolean sex;
@@ -37,10 +37,13 @@ public class User implements Serializable {
 
     private String phone;
 
+    @JsonIgnore
     private Integer status;
 
+    @JsonIgnore
     private Date created;
 
+    @JsonIgnore
     private Date updated;
 
 }

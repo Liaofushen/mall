@@ -1,5 +1,6 @@
 package com.lfs.mall.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -12,7 +13,6 @@ import java.util.Date;
  * Modified By :
  * Description : 管理员
  *
- * @Version 2019/2/22
  */
 @Getter
 @Setter
@@ -22,6 +22,8 @@ public class Manager implements Serializable {
     private Integer id;
     private String managerName;
     private String password;
+    @JsonIgnore
     private Date created;
+    @JsonIgnore
     private Date updated;
 }

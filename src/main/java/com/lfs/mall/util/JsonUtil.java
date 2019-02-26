@@ -9,9 +9,8 @@ import java.io.IOException;
  * Modified By :
  * Description :
  *
- * @Version 2019/2/15
  */
-public class JsonTool {
+public class JsonUtil {
     private static final ObjectMapper mapper = new ObjectMapper();
 
     public static String toJsonString(Object o) {

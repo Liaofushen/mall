@@ -10,7 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * Modified By :
  * Description :
  *
- * @Version 2019/2/21
+ * Version 2019/2/21
  */
 @Configuration
 @EnableWebMvc

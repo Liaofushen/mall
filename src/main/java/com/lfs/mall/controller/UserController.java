@@ -1,8 +1,9 @@
 package com.lfs.mall.controller;
 
+import com.lfs.mall.domain.Result;
 import com.lfs.mall.domain.User;
 import com.lfs.mall.service.UserService;
-import com.lfs.mall.util.ResTool;
+import com.lfs.mall.util.ResUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,7 +21,7 @@ import java.util.logging.Logger;
  * Modified By :
  * Description :
  *
- * @Version 2019/2/14
+ * Version 2019/2/14
  */
 @RestController
 @RequestMapping("/user")
@@ -43,19 +44,25 @@ public class UserController {
         this.session = session;
     }
 
+    @RequestMapping("/test")
+    public Result test(@RequestBody User user) {
+        return ResUtil.success(user);
+    }
+
     @PostMapping("/login")
-    public String login(@RequestBody User user) {
+    public Result login(@RequestBody User user) {
         if (StringUtils.isEmpty(user.getUsername()) || StringUtils.isEmpty(user.getPassword())) {
-            return ResTool.error("用户名或密码为空");
+            return ResUtil.error("用户名或密码为空");
         }
+
         if (userService.hasUsername(user.getUsername()) &&
                 userService.getUser(user).getPassword().equals(user.getPassword())) {
             user = userService.getUser(user);
-            session.setAttribute(user.getUsername(), user);
+            session.setAttribute("user", user);
             logger.info("用户登录：" + user.toString());
-            return ResTool.success(user);
+            return ResUtil.success(user);
         } else {
-            return ResTool.error("用户名或密码错误");
+            return ResUtil.error("用户名或密码错误");
         }
     }
 
@@ -67,16 +74,16 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public String register(@RequestBody User user) {
+    public Result register(@RequestBody User user) {
         if (StringUtils.isEmpty(user.getUsername()) || StringUtils.isEmpty(user.getPassword())) {
-            return ResTool.error("用户名或密码为空");
+            return ResUtil.error("用户名或密码为空");
         }
         if (userService.hasUsername(user.getUsername())) {
-            return ResTool.error("该用户名已存在");
+            return ResUtil.error("该用户名已存在");
         }
         userService.addUser(user);
         logger.info("[用户注册] " + user.toString());
-        return ResTool.success(user);
+        return ResUtil.success(user);
     }
 
 

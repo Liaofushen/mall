@@ -11,10 +11,11 @@ import java.util.List;
  * Modified By :
  * Description : 商品目录
  *
- * @Version 2019/2/22
  */
 @Mapper
 @Repository
 public interface CategoryMapper {
     List<Category> getCategory();
+
+    Category getCategoryById(Integer id);
 }

@@ -1,5 +1,6 @@
 package com.lfs.mall.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -12,7 +13,7 @@ import java.util.Date;
  * Modified By :
  * Description :收货地址
  *
- * @Version 2019/2/21
+ * Version 2019/2/21
  */
 @Setter
 @Getter
@@ -29,6 +30,8 @@ public class ReceiveAddr implements Serializable {
     private String city;
     private String county;
     private String addr;
+    @JsonIgnore
     private Date created;
+    @JsonIgnore
     private Date updated;
 }

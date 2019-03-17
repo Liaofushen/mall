@@ -55,7 +55,8 @@ public class CommodityController {
     @GetMapping("/commodity/recommend")
     public Result getRecommend() {
         if (session.getAttribute("user") == null) {
-            return ResUtil.error("请先登录");
+            List<Commodity> commodityList = recommendService.getRecommendCommodity(4);
+            return ResUtil.success(commodityList);
         }
 
         User user = (User) session.getAttribute("user");

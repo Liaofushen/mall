@@ -20,6 +20,17 @@ public class RecommendService {
     private OrderItemMapper orderItemMapper;
     private CommodityMapper commodityMapper;
 
+    public List<Commodity> getRecommendCommodity(int num) {
+        List<Integer> commodityTop = orderItemMapper.getCommodityTop(num);
+
+        List<Commodity> recommendCommidityList = new ArrayList<>();
+        for (Integer i : commodityTop) {
+            recommendCommidityList.add(commodityMapper.getCommodityById(i));
+        }
+        return recommendCommidityList;
+
+    }
+
 
     public List<Commodity> getRecommendCommodityByUserId(int userId, int num) {
         List<User> userList = userMapper.getAllUser();

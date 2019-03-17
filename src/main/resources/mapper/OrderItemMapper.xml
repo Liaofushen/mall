@@ -45,6 +45,18 @@
         from mall_db.t_order_item
         where Forder_id = #{orderId}
     </select>
+    <select id="getCommodityTop" resultType="java.lang.Integer" >
+        select Fcommodity_id
+        from (
+            select
+                Fcommodity_id as Fcommodity_id,
+                count(Fcommodity_id) as cnt
+            from mall_db.t_order_item
+            group by Fcommodity_id
+            order by cnt desc
+        ) as t
+        limit #{num}
+    </select>
     <select id="getCommodityIdByUserId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
         select t_order_item.Fcommodity_id
         from mall_db.t_order_item

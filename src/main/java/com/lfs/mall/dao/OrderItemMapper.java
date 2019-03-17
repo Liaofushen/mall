@@ -21,4 +21,5 @@ public interface OrderItemMapper {
     List<OrderItem> getOrderItemByOrderId(@Param("orderId") Integer orderId);
     void addOrderItem(OrderItem orderItem);
     Set<Integer> getCommodityIdByUserId(@Param("userId") Integer userId);
+    List<Integer> getCommodityTop(@Param("num")Integer num);
 }

@@ -2,9 +2,11 @@ package com.lfs.mall.dao;
 
 import com.lfs.mall.domain.OrderItem;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Author      : Fushen
@@ -16,7 +18,7 @@ import java.util.List;
 @Mapper
 @Repository
 public interface OrderItemMapper {
-    List<OrderItem> getOrderItem(OrderItem orderItem);
+    List<OrderItem> getOrderItemByOrderId(@Param("orderId") Integer orderId);
     void addOrderItem(OrderItem orderItem);
-    void updateOrderItem(OrderItem orderItem);
+    Set<Integer> getCommodityIdByUserId(@Param("userId") Integer userId);
 }

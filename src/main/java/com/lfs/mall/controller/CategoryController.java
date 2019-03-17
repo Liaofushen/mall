@@ -1,36 +1,34 @@
 package com.lfs.mall.controller;
 
-import com.lfs.mall.dao.CategoryMapper;
 import com.lfs.mall.dao.CommodityMapper;
+import com.lfs.mall.dao.KeywordMapper;
+import com.lfs.mall.domain.Keyword;
 import com.lfs.mall.domain.Result;
 import com.lfs.mall.util.ResUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 @RestController
 public class CategoryController {
 
-    private CategoryMapper categoryMapper;
     private CommodityMapper commodityMapper;
+    private KeywordMapper keywordMapper;
 
 
     @GetMapping("/category")
-    public Result getCategory(@RequestParam(required = false, defaultValue = "") String keyword) {
-        if (StringUtils.isEmpty(keyword)) {
-            return ResUtil.success(categoryMapper.getCategory());
-        }
-        System.out.println(keyword);
-//        try {
-//            keyword = new String(keyword.getBytes("ISO-8859-1"), "UTF-8");
-//        } catch (UnsupportedEncodingException e) {
-//            e.printStackTrace();
-//        }
+    public Result getCategory(@RequestParam() String keyword) {
         return ResUtil.success(commodityMapper.getCommodityLikeName(keyword));
+    }
+
+    @GetMapping("/category/{categoryId}")
+    public Result getCategory(@PathVariable("categoryId") Integer categoryId) {
+        List<Keyword> keywordList = keywordMapper.getKeywordByCategoryId(categoryId);
+        return ResUtil.success(keywordList);
     }
 
     @Autowired
@@ -39,7 +37,7 @@ public class CategoryController {
     }
 
     @Autowired
-    public void setCategoryMapper(CategoryMapper categoryMapper) {
-        this.categoryMapper = categoryMapper;
+    public void setKeywordMapper(KeywordMapper keywordMapper) {
+        this.keywordMapper = keywordMapper;
     }
 }

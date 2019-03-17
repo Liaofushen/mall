@@ -7,6 +7,7 @@ import lombok.ToString;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Author      : Fushen
@@ -22,6 +23,8 @@ public class Category implements Serializable {
     private Integer id;
     private String name;
     private Integer level;
+
+    private List<String> keywords;
     @JsonIgnore
     private Date created;
     @JsonIgnore

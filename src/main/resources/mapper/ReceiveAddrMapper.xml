@@ -32,30 +32,28 @@
     </sql>
 
     <insert id="addReceiveAddr" parameterType="com.lfs.mall.domain.ReceiveAddr">
-        insert into mall_db.t_receive_addr(
-          Fid,
-          Fuser_id,
-          Freceiver_name,
-          Fphone,
-          Fzip_code,
-          Fprovince,
-          Fcity,
-          Fcounty,
-          Faddr,
-          Fcreated,
-          Fupdated
+        insert into mall_db.t_receive_addr (
+            Fuser_id,
+            Freceiver_name,
+            Fphone,
+            Fzip_code,
+            Fprovince,
+            Fcity,
+            Fcounty,
+            Faddr,
+            Fcreated,
+            Fupdated
         ) values (
-          #{id},
-          #{userId},
-          #{receiveName},
-          #{phone},
-          #{zipCode},
-          #{province},
-          #{city},
-          #{county},
-          #{addr},
-          now(),
-          now()
+            #{userId},
+            #{receiverName},
+            #{phone},
+            #{zipCode},
+            #{province},
+            #{city},
+            #{county},
+            #{addr},
+            now(),
+            now()
         )
     </insert>
 
@@ -63,17 +61,28 @@
         update mall_db.t_receive_addr
         <set>
             <if test="id != null">Fid=#{id},</if>
-            <if test="userId != null"> Fuser_id=#{userId},</if>
-            <if test="receiverName != null"> Freceicer_name=#{receicerName},</if>
-            <if test="phone != null"> Fphone=#{phone},</if>
-            <if test="zipCode != null"> Fzip_code=#{zipCode},</if>
-            <if test="province != null"> Fprocince=#{procince},</if>
-            <if test="city != null"> Fcity=#{city},</if>
-            <if test="county != null"> Fcounty=#{county},</if>
-            <if test="addr != null"> Faddr=#{addr},</if>
-            <if test="created != null"> Fcreated=#{created},</if>
+            <if test="userId != null">Fuser_id=#{userId},</if>
+            <if test="receiverName != null">Freceicer_name=#{receicerName},</if>
+            <if test="phone != null">Fphone=#{phone},</if>
+            <if test="zipCode != null">Fzip_code=#{zipCode},</if>
+            <if test="province != null">Fprocince=#{procince},</if>
+            <if test="city != null">Fcity=#{city},</if>
+            <if test="county != null">Fcounty=#{county},</if>
+            <if test="addr != null">Faddr=#{addr},</if>
+            <if test="created != null">Fcreated=#{created},</if>
             Fupdated=now()
         </set>
         <include refid="common_where"/>
     </update>
+
+    <select id="getByUserId" parameterType="java.lang.Integer" resultMap="receiveAddr">
+        select *
+        from mall_db.t_receive_addr
+        where Fuser_id = #{userId}
+    </select>
+    <select id="getById" parameterType="java.lang.Integer" resultMap="receiveAddr">
+        select *
+        from mall_db.t_receive_addr
+        where Fid = #{id}
+    </select>
 </mapper>

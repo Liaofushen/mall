@@ -37,6 +37,8 @@ public class User implements Serializable {
 
     private String phone;
 
+    private String headImg;
+
     @JsonIgnore
     private Integer status;
 

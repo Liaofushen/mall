@@ -6,6 +6,7 @@
         <result property="id" column="Fid"/>
         <result property="username" column="Fusername"/>
         <result property="password" column="Fpassword"/>
+        <result property="headImg" column="Fhead_img"/>
         <result property="sex" column="Fsex"/>
         <result property="email" column="Femail"/>
         <result property="phone" column="Fphone"/>
@@ -13,24 +14,46 @@
         <result property="created" column="Fcreated"/>
         <result property="updated" column="Fupdated"/>
     </resultMap>
+    <resultMap id="userVO" type="com.lfs.mall.domain.vo.UserVO">
+        <result property="id" column="Fid"/>
+        <result property="username" column="Fusername"/>
+        <result property="headImg" column="Fhead_img"/>
+        <result property="sex" column="Fsex"/>
+        <result property="email" column="Femail"/>
+        <result property="phone" column="Fphone"/>
+    </resultMap>
 
     <sql id="common_where">
         where 1=1
         <if test="id != null">and Fid=#{id}</if>
         <if test="username != null">and Fusername=#{username}</if>
         <if test="password != null">and Fpassword=#{password}</if>
+        <if test="headImg != null">and Fhead_img=#{headImg}</if>
         <if test="sex != null">and Fsex = #{sex}</if>
         <if test="email != null">and Femail=#{email}</if>
         <if test="phone != null">and Fphone=#{phone}</if>
         <if test="status != null">and Fstatus=#{status}</if>
-        <if test="created != null">and Fcreated=#{created}</if>
-        <if test="updated != null">and Fupdated=#{updated}</if>
     </sql>
 
     <select id="getUser" resultMap="user" parameterType="com.lfs.mall.domain.User">
         select *
         from mall_db.t_user
         <include refid="common_where"/>
+    </select>
+    <select id="getAllUser" resultMap="user">
+        select *
+        from mall_db.t_user
+        order by Fid
+    </select>
+    <select id="getUserById" resultMap="user" parameterType="java.lang.Integer">
+        select *
+        from mall_db.t_user
+        where Fid=#{id}
+    </select>
+    <select id="getUserByIdVO" resultMap="userVO" parameterType="java.lang.Integer">
+        select *
+        from mall_db.t_user
+        where Fid=#{id}
     </select>
 
     <insert id="addUser" parameterType="com.lfs.mall.domain.User">
@@ -58,7 +81,6 @@
     <update id="updateUser" parameterType="com.lfs.mall.domain.User">
         update mall_db.t_user
         <set>
-            <if test="Fid != null">Fid=#{id},</if>
             <if test="username != null">Fusername=#{username},</if>
             <if test="password != null">Fpassword=#{password},</if>
             <if test="sex != null">Fsex=#{sex},</if>
@@ -67,7 +89,7 @@
             <if test="created != null">Fcreated=#{created},</if>
             Fupdated=now()
         </set>
-        <include refid="common_where"/>
+        where Fid=#{id}
     </update>
 
 

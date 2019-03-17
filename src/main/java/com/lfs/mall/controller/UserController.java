@@ -6,10 +6,7 @@ import com.lfs.mall.service.UserService;
 import com.lfs.mall.util.ResUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.logging.Logger;
@@ -20,7 +17,7 @@ import java.util.logging.Logger;
  * Fushen
  * Modified By :
  * Description :
- *
+ * <p>
  * Version 2019/2/14
  */
 @RestController
@@ -49,28 +46,43 @@ public class UserController {
         return ResUtil.success(user);
     }
 
+    @GetMapping("/")
+    public Result curUser() {
+        if (session.getAttribute("user") != null) {
+            return ResUtil.success((User) session.getAttribute("user"));
+        }
+        return ResUtil.success();
+    }
+
     @PostMapping("/login")
     public Result login(@RequestBody User user) {
         if (StringUtils.isEmpty(user.getUsername()) || StringUtils.isEmpty(user.getPassword())) {
             return ResUtil.error("用户名或密码为空");
         }
+        try {
+            User userByUsername = userService.getUserByUsername(user.getUsername());
+            if (user.getPassword().equals(userByUsername.getPassword())) {
+                session.setAttribute("user", userByUsername);
+                logger.info("用户登录：" + userByUsername.toString());
+                return ResUtil.success(userByUsername);
+            } else {
+                return ResUtil.error("用户名或密码错误");
 
-        if (userService.hasUsername(user.getUsername()) &&
-                userService.getUser(user).getPassword().equals(user.getPassword())) {
-            user = userService.getUser(user);
-            session.setAttribute("user", user);
-            logger.info("用户登录：" + user.toString());
-            return ResUtil.success(user);
-        } else {
+            }
+        } catch (Exception ex) {
             return ResUtil.error("用户名或密码错误");
         }
+
     }
 
     @PostMapping("/logout")
-    public void logout(@RequestBody User user) {
-        if (!StringUtils.isEmpty(user.getUsername())) {
-            session.removeAttribute(user.getUsername());
+    public Result logout() {
+        try {
+            session.removeAttribute("user");
+        } catch (Exception ex) {
+            return ResUtil.error();
         }
+        return ResUtil.success();
     }
 
     @PostMapping("/register")
@@ -81,9 +93,39 @@ public class UserController {
         if (userService.hasUsername(user.getUsername())) {
             return ResUtil.error("该用户名已存在");
         }
-        userService.addUser(user);
-        logger.info("[用户注册] " + user.toString());
-        return ResUtil.success(user);
+        try {
+            userService.addUser(user);
+            user = userService.getUser(user);
+            logger.info("[用户注册] " + user.toString());
+            return ResUtil.success(user);
+        } catch (Exception ex) {
+            return ResUtil.error();
+        }
+    }
+
+
+    @PostMapping("/update")
+    public Result update(@RequestBody User user) {
+        if (session.getAttribute("user") == null) {
+            return ResUtil.error("请先登录");
+        }
+
+        User user1 = (User) session.getAttribute("user");
+        if (user.getUsername() != null &&
+                !user.getUsername().equals(user1.getUsername()) &&
+                userService.hasUsername(user.getUsername())) {
+            return ResUtil.error("该用户名已存在");
+        }
+        try {
+            user.setId(((User) session.getAttribute("user")).getId());
+            System.out.println(user.toString());
+            userService.updateUser(user);
+            user = userService.getUser(user);
+            session.setAttribute("user", user);
+            return ResUtil.success(user);
+        } catch (Exception ex) {
+            return ResUtil.error(ex.toString());
+        }
     }
 
 

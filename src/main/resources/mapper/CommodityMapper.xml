@@ -19,6 +19,13 @@
         <result property="created" column="Fcreated"/>
         <result property="updated" column="Fupdated"/>
     </resultMap>
+    <resultMap id="commodityVO" type="com.lfs.mall.domain.vo.CommodityVO">
+        <result property="id" column="Fid"/>
+        <result property="title" column="Ftitle"/>
+        <result property="price" column="Fprice"/>
+        <result property="image" column="Fimage"/>
+        <result property="created" column="Fcreated"/>
+    </resultMap>
 
     <sql id="common_where">
         where 1=1
@@ -43,6 +50,17 @@
         select *
         from mall_db.t_commodity
         <include refid="common_where"/>
+    </select>
+    <select id="getAllCommodity" resultMap="commodity">
+        select *
+        from mall_db.t_commodity
+        order by Fid
+    </select>
+
+    <select id="getCommodityById" resultMap="commodity" parameterType="java.lang.Integer">
+        select *
+        from mall_db.t_commodity
+        where Fid = #{id}
     </select>
 
     <select id="getCommodityLikeName" resultMap="commodity" parameterType="java.lang.String">
@@ -72,6 +90,15 @@
             Fupdated=now()
         </set>
         <include refid="common_where"/>
+    </update>
+
+    <update id="consumeCommodityById" parameterType="java.lang.Integer">
+        update mall_db.t_commodity
+        <set>
+            Fnum=Fnum-1,
+            Fupdated=now()
+        </set>
+        where Fid=#{id}
     </update>
 
     <insert id="addCommodity" parameterType="com.lfs.mall.dao.CommodityMapper">

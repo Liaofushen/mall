@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.lfs.mall.dao.CommentMapper">
+    <resultMap id="commodity" type="com.lfs.mall.domain.Comment">
+        <result column="Fid" property="id"/>
+        <result column="Fcommodity_id" property="commodityId"/>
+        <result column="Fuser_id" property="userId"/>
+        <result column="Fdesc" property="desc"/>
+        <result column="Fstar_level" property="starLevel"/>
+        <result column="Fcreated" property="created"/>
+        <result column="Fupdated" property="updated"/>
+    </resultMap>
+    <resultMap id="commodityVO" type="com.lfs.mall.domain.vo.CommentVO">
+        <result column="Fid" property="id"/>
+        <result column="Fcommodity_id" property="commodityId"/>
+        <result column="Fuser_id" property="userId"/>
+        <result column="Fdesc" property="desc"/>
+        <result column="Fstar_level" property="starLevel"/>
+        <result column="Fcreated" property="created"/>
+        <result column="Fupdated" property="updated"/>
+    </resultMap>
+
+    <select id="getCommentByCommodityId" resultMap="commodity" parameterType="java.lang.Integer">
+        select *
+        from mall_db.t_comment
+        where Fcommodity_id = #{commodityId}
+    </select>
+    <select id="getCommentByCommodityIdVO" resultMap="commodityVO" parameterType="java.lang.Integer">
+        select *
+        from mall_db.t_comment
+        where Fcommodity_id = #{commodityId}
+    </select>
+
+    <insert id="addComment" parameterType="com.lfs.mall.domain.Comment">
+        insert into mall_db.t_comment (Fcommodity_id, Fuser_id, Fdesc, Fstar_level, Fcreated, Fupdated) values (
+            #{commodityId},
+            #{userId},
+            #{desc},
+            #{starLevel},
+            now(),
+            now()
+        )
+    </insert>
+
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from mall_db.t_comment
+        where Fid=#{id}
+    </delete>
+</mapper>

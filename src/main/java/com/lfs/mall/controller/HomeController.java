@@ -28,7 +28,11 @@ public class HomeController {
     @GetMapping({"/home", "/index"})
     public Result getHome() {
         if (home == null) home = new HashMap<>();
-        home.put("category-list", categoryMapper.getCategory());
+        List<Category> category = categoryMapper.getCategory();
+        for (Category c : category) {
+            c.setKeywords(keywordMapper.getKeywordName(c.getId()));
+        }
+        home.put("category-list", category);
         home.put("slideshow-list", getSlideShow());
         home.put("keyword-list", getKeyShow());
         return ResUtil.success(home);
@@ -36,9 +40,9 @@ public class HomeController {
 
     private String[] getSlideShow() {
         return new String[]{
-                "http://www.liaofushen.xyz:8081/slideshow-1.jpg",
-                "http://www.liaofushen.xyz:8081/slideshow-2.jpg",
-                "http://www.liaofushen.xyz:8081/slideshow-3.jpg"};
+                "http://www.liaofushen.xyz:8081/images/slideshow-1.jpg",
+                "http://www.liaofushen.xyz:8081/images/slideshow-2.jpg",
+                "http://www.liaofushen.xyz:8081/images/slideshow-3.jpg"};
     }
 
     private Map getKeyShow() {

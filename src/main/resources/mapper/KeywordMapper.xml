@@ -10,8 +10,19 @@
         <result column="Fimg" property="img"/>
     </resultMap>
 
+
     <select id="getKeyword" resultMap="keyword">
         select *
         from mall_db.t_keyword
+    </select>
+    <select id="getKeywordByCategoryId" resultMap="keyword" parameterType="java.lang.Integer">
+        select *
+        from mall_db.t_keyword
+        where Fcategory_id=#{categoryId}
+    </select>
+    <select id="getKeywordName" resultType="java.lang.String" parameterType="java.lang.Integer">
+        select Fname
+        from mall_db.t_keyword
+        where Fcategory_id=#{categoryId}
     </select>
 </mapper>

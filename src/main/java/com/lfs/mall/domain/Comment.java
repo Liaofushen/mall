@@ -22,10 +22,11 @@ public class Comment implements Serializable {
     private static final long serialVersionUID = 746304179728059445L;
     private Integer id;
     private Integer commodityId;
+    private Integer userId;
     private String desc;
     private Integer starLevel;
-    @JsonIgnore
+
     private Date created;
-    @JsonIgnore
+
     private Date updated;
 }

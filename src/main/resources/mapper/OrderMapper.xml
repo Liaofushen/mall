@@ -12,6 +12,14 @@
         <result property="created" column="Fcreated"/>
         <result property="updated" column="Fupdated"/>
     </resultMap>
+    <resultMap id="orderGVO" type="com.lfs.mall.domain.vo.OrderGVO">
+        <result property="id" column="Fid"/>
+        <result property="userId" column="Fuser_id"/>
+        <result property="weightSum" column="Fweight_sum"/>
+        <result property="priceSum" column="Fprice_sum"/>
+        <result property="status" column="Fstatus"/>
+        <result property="created" column="Fcreated"/>
+    </resultMap>
 
     <sql id="common_where">
         where 1=1
@@ -20,10 +28,8 @@
         <if test="receiveAddrId != null">and Freceive_addr_id=#{receiveAddrId}</if>
         <if test="weightSum != null">and Fweight_sum=#{weightSum}</if>
         <if test="priceSum != null">and Fprice_sum=#{priceSum}</if>
-        <if test="status != null">and Fstatus=#{status}</if>
-        <if test="created != null">and Fcreated=#{created}</if>
-        <if test="updated != null">and Fupdated=#{updated}</if>
     </sql>
+
 
     <insert id="addOrder" parameterType="com.lfs.mall.domain.Order">
         INSERT INTO mall_db.t_order (
@@ -56,15 +62,41 @@
             <if test="weightSum != null">Fweight_sum=#{weightSum},</if>
             <if test="priceSum != null">Fprice_sum=#{priceSum},</if>
             <if test="status != null">Fstatus=#{status},</if>
-            <if test="created != null">Fcreated=#{created},</if>
             Fupdated=now()
         </set>
         <include refid="common_where"/>
+
     </update>
+    <update id="updateOrderStatus" parameterType="com.lfs.mall.domain.Order">
+        update mall_db.t_order
+        <set>
+            Fstatus=#{status},
+            Fupdated=now()
+        </set>
+        where Fid=#{id}
+
+    </update>
+
 
     <select id="getOrder" resultMap="order" parameterType="com.lfs.mall.domain.Order">
         select *
         from mall_db.t_order
         <include refid="common_where"/>
+    </select>
+    <select id="getMaxId" resultType="int">
+        select max(Fid)
+        from mall_db.t_order
+    </select>
+
+    <select id="getOrderByUserId" resultMap="order" parameterType="java.lang.Integer">
+        select *
+        from mall_db.t_order
+        where Fuser_id = #{userId}
+    </select>
+    <select id="getOrderByUserIdGVO" resultMap="orderGVO" parameterType="com.lfs.mall.domain.Order">
+        select *
+        from mall_db.t_order
+        where Fuser_id = #{userId}
+        <if test="status != null">and Fstatus=#{status}</if>
     </select>
 </mapper>

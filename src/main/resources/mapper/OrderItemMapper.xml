@@ -4,17 +4,53 @@
 <mapper namespace="com.lfs.mall.dao.OrderItemMapper">
     <resultMap id="orderItem" type="com.lfs.mall.domain.OrderItem">
         <result property="id" column="Fid"/>
+        <result property="orderId" column="Forder_id"/>
+        <result property="commodityId" column="Fcommodity_id"/>
+        <result property="commodityNum" column="Fcommodity_num"/>
+        <result property="commodityTitle" column="Fcommodity_title"/>
+        <result property="commodityPrice" column="Fcommodity_price"/>
+        <result property="commodityWeight" column="Fcommodity_weight"/>
+        <result property="commodityImg" column="Fcommodity_img"/>
+
+        <result property="created" column="Fcreated"/>
+        <result property="updated" column="Fupdated"/>
     </resultMap>
 
     <insert id="addOrderItem" parameterType="com.lfs.mall.domain.OrderItem">
-
+        insert into mall_db.t_order_item (
+            Forder_id,
+            Fcommodity_id,
+            Fcommodity_num,
+            Fcommodity_title,
+            Fcommodity_price,
+            Fcommodity_weight,
+            Fcommodity_img,
+            Fcreated,
+            Fupdated
+        ) values (
+            #{orderId},
+            #{commodityId},
+            #{commodityNum},
+            #{commodityTitle},
+            #{commodityPrice},
+            #{commodityWeight},
+            #{commodityImg},
+            now(),
+            now()
+        )
     </insert>
 
-    <select id="getOrderItem" parameterType="com.lfs.mall.domain.OrderItem" resultMap="orderItem">
-
+    <select id="getOrderItemByOrderId" parameterType="java.lang.Integer" resultMap="orderItem">
+        select *
+        from mall_db.t_order_item
+        where Forder_id = #{orderId}
+    </select>
+    <select id="getCommodityIdByUserId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        select t_order_item.Fcommodity_id
+        from mall_db.t_order_item
+            join mall_db.t_order
+                on t_order.Fid = t_order_item.Forder_id
+        where t_order.Fuser_id = #{userId}
     </select>
 
-    <update id="updateOrderItem" parameterType="com.lfs.mall.domain.OrderItem">
-
-    </update>
 </mapper>

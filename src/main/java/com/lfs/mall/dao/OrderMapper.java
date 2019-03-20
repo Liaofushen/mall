@@ -26,4 +26,5 @@ public interface OrderMapper {
     List<OrderGVO> getOrderByStatus(@Param("status") Integer status);
 
     List<OrderGVO> getOrderByUserIdGVO(Order order);
+    Order getOrderById(@Param("id") Integer id);
 }

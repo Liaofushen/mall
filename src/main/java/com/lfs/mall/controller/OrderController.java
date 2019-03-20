@@ -6,7 +6,9 @@ import com.lfs.mall.dao.OrderMapper;
 import com.lfs.mall.dao.ReceiveAddrMapper;
 import com.lfs.mall.domain.*;
 import com.lfs.mall.domain.vo.OrderGVO;
+import com.lfs.mall.domain.vo.OrderIntstVO;
 import com.lfs.mall.domain.vo.OrderVO;
+import com.lfs.mall.util.InstallmentUtil;
 import com.lfs.mall.util.ResUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -90,12 +92,94 @@ public class OrderController {
         return ResUtil.success(orderVO);
     }
 
+
+    @PostMapping("/interestOrder")
+    public Result addIntstOrder(@RequestBody OrderIntstVO orderVO) {
+
+        if (session.getAttribute("user") == null) {
+//            User user = new User();
+//            user.setId(2);
+//            user.setUsername("aa");
+//            session.setAttribute("user", user);
+            return ResUtil.error("请先登录");
+        }
+
+        try {
+            orderVO.setId(orderMapper.getMaxId() + 1);
+            orderVO.setUser((User) session.getAttribute("user"));
+            orderVO.setUserId(orderVO.getUser().getId());
+            orderVO.setReceiveAddrId(orderVO.getReceiveAddr().getId());
+            orderVO.setReceiveAddr(receiveAddrMapper.getById(orderVO.getReceiveAddr().getId()));
+            orderVO.setInstallmentHavePaid(0);
+
+            orderVO.setPriceSum(BigDecimal.ZERO);
+            orderVO.setWeightSum(BigDecimal.ZERO);
+            orderVO.setStatus(0);
+
+            for (OrderItem i : orderVO.getOrderItems()) {
+                Commodity commodity = commodityMapper.getCommodityById(i.getCommodityId());
+                i.setCommodityId(commodity.getId());
+                i.setCommodityTitle(commodity.getTitle());
+                i.setCommodityPrice(commodity.getPrice());
+                i.setCommodityWeight(commodity.getWeight());
+                i.setCommodityTitle(commodity.getTitle());
+                i.setCommodityImg(commodity.getImage());
+
+
+                orderVO.setPriceSum(orderVO.getPriceSum().add(i.getCommodityPrice()));
+                orderVO.setWeightSum(orderVO.getWeightSum().add(i.getCommodityWeight()));
+            }
+            Installment installment = InstallmentUtil.getInstallment(orderVO.getPriceSum(), orderVO.getInstallmentNum());
+            orderVO.setInstallment(installment);
+            orderVO.setPriceSum(installment.getSumPrice());
+            Order order = new Order();
+            order.setId(orderVO.getId());
+            order.setUserId(orderVO.getUser().getId());
+            order.setPriceSum(orderVO.getPriceSum());
+            order.setWeightSum(orderVO.getWeightSum());
+            order.setStatus(0);
+            order.setReceiveAddrId(orderVO.getReceiveAddr().getId());
+            if (orderVO.getInstallmentNum() != null) {
+                order.setInstallment(orderVO.getInstallmentNum());
+            }
+
+            orderMapper.addOrder(order);
+
+
+            for (OrderItem i : orderVO.getOrderItems()) {
+                i.setOrderId(order.getId());
+                orderItemMapper.addOrderItem(i);
+            }
+            commodityMapper.consumeCommodityById(order.getId());
+            if (session.getAttribute("cart") != null) {
+                session.removeAttribute("cart");
+            }
+
+        } catch (Exception ex) {
+            return ResUtil.error(ex.getMessage());
+        }
+        return ResUtil.success(orderVO);
+    }
+
+
     @GetMapping("/pay/{orderId}")
     public Result getPay(@PathVariable() Integer orderId) {
         Map<String, String> res = new HashMap<>();
+        try {
+            Order order = orderMapper.getOrderById(orderId);
+            if (order.getInstallment().equals(1)) {
+                res.put("price", order.getPriceSum().toString());
+            } else {
+                Installment installment = InstallmentUtil.getInstallment(order.getPriceSum(), order.getInstallment());
 
-        res.put("pay-code", "http://www.liaofushen.xyz:8081/images/alipay.png");
-        return ResUtil.success(res);
+                res.put("price", installment.getPerPrice().toString());
+            }
+            res.put("pay-code", "http://www.liaofushen.xyz:8081/images/alipay.png");
+            return ResUtil.success(res);
+
+        } catch (Exception ex) {
+            return ResUtil.error(ex.toString());
+        }
     }
 
     @PostMapping("/pay/{orderId}")
@@ -105,11 +189,20 @@ public class OrderController {
             order.setId(orderId);
             order.setStatus(1);
             try {
-                System.out.println(order.toString());
-                orderMapper.updateOrderStatus(order);
-                return ResUtil.success();
+                Order order1 = orderMapper.getOrderById(orderId);
+
+                if (order1.getInstallment().equals(1)) {
+                    orderMapper.updateOrderStatus(order);
+                    return ResUtil.success();
+
+                } else {
+                    order.setInstallmentHavePaid(order1.getInstallmentHavePaid() + 1);
+                    orderMapper.updateOrderStatus(order);
+                    return ResUtil.success();
+                }
+
             } catch (Exception ex) {
-                return ResUtil.error(ex.getMessage());
+                return ResUtil.error(ex.toString());
             }
         }
         return ResUtil.success();

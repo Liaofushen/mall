@@ -12,6 +12,7 @@
         <result property="created" column="Fcreated"/>
         <result property="updated" column="Fupdated"/>
         <result property="installment" column="Finstallment"/>
+        <result property="installmentHavePaid" column="Finstallment_have_paid"/>
     </resultMap>
     <resultMap id="orderGVO" type="com.lfs.mall.domain.vo.OrderGVO">
         <result property="id" column="Fid"/>
@@ -20,6 +21,8 @@
         <result property="priceSum" column="Fprice_sum"/>
         <result property="status" column="Fstatus"/>
         <result property="created" column="Fcreated"/>
+        <result property="installment" column="Finstallment"/>
+        <result property="installmentHavePaid" column="Finstallment_have_paid"/>
     </resultMap>
 
     <sql id="common_where">
@@ -40,6 +43,7 @@
             Fweight_sum,
             Fprice_sum,
             Fstatus,
+            Finstallment,
             Fcreated,
             Fupdated
         ) VALUES (
@@ -49,6 +53,7 @@
             #{weightSum},
             #{priceSum},
             #{status},
+            #{installment},
             now(),
             now()
         )
@@ -62,6 +67,8 @@
             <if test="receiveAddrId != null">Freceive_addr_id=#{receiveAddrId},</if>
             <if test="weightSum != null">Fweight_sum=#{weightSum},</if>
             <if test="priceSum != null">Fprice_sum=#{priceSum},</if>
+            <if test="installment != null">Finstallment = #{installment}</if>
+            <if test="installmentHavePaid != null">Finstallment_have_paid=#{installmentHavePaid}</if>
             <if test="status != null">Fstatus=#{status},</if>
             Fupdated=now()
         </set>
@@ -71,6 +78,8 @@
     <update id="updateOrderStatus" parameterType="com.lfs.mall.domain.Order">
         update mall_db.t_order
         <set>
+            <if test="installment != null">Finstallment = #{installment},</if>
+            <if test="installmentHavePaid != null">Finstallment_have_paid = #{installmentHavePaid},</if>
             Fstatus=#{status},
             Fupdated=now()
         </set>
@@ -104,6 +113,13 @@
         SELECT *
         FROM mall_db.t_order
         WHERE Fstatus = #{status}
+
+
+    </select>
+    <select id="getOrderById" resultMap="order" parameterType="java.lang.Integer">
+        SELECT *
+        FROM mall_db.t_order
+        WHERE Fid = #{id}
 
 
     </select>

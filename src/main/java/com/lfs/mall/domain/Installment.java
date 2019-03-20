@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 @ToString
 public class Installment {
     private Integer times;
+    private BigDecimal sumPrice;
     private BigDecimal perPrice;
     private BigDecimal perInterest;
     private BigDecimal interestRate;
@@ -20,5 +21,6 @@ public class Installment {
         this.perPrice = perPrice;
         this.perInterest = perInterest;
         this.interestRate = interestRate;
+        this.sumPrice = perPrice.multiply(new BigDecimal(this.times.toString()));
     }
 }

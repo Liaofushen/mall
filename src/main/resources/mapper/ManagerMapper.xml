@@ -40,6 +40,11 @@
         FROM mall_db.t_manager
         <include refid="common_where"/>
     </select>
+    <select id="getManagerByName" parameterType="com.lfs.mall.domain.Manager" resultMap="manager">
+        SELECT *
+        FROM mall_db.t_manager
+        <include refid="common_where"/>
+    </select>
 
     <update id="updateManager" parameterType="com.lfs.mall.domain.Manager">
         UPDATE mall_db.t_manager

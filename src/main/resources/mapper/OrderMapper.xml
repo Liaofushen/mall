@@ -11,6 +11,7 @@
         <result property="status" column="Fstatus"/>
         <result property="created" column="Fcreated"/>
         <result property="updated" column="Fupdated"/>
+        <result property="installment" column="Finstallment"/>
     </resultMap>
     <resultMap id="orderGVO" type="com.lfs.mall.domain.vo.OrderGVO">
         <result property="id" column="Fid"/>
@@ -84,19 +85,26 @@
         <include refid="common_where"/>
     </select>
     <select id="getMaxId" resultType="int">
-        select max(Fid)
-        from mall_db.t_order
+        SELECT max(Fid)
+        FROM mall_db.t_order
     </select>
 
     <select id="getOrderByUserId" resultMap="order" parameterType="java.lang.Integer">
-        select *
-        from mall_db.t_order
-        where Fuser_id = #{userId}
+        SELECT *
+        FROM mall_db.t_order
+        WHERE Fuser_id = #{userId}
     </select>
     <select id="getOrderByUserIdGVO" resultMap="orderGVO" parameterType="com.lfs.mall.domain.Order">
         select *
         from mall_db.t_order
         where Fuser_id = #{userId}
         <if test="status != null">and Fstatus=#{status}</if>
+    </select>
+    <select id="getOrderByStatus" resultMap="orderGVO" parameterType="java.lang.Integer">
+        SELECT *
+        FROM mall_db.t_order
+        WHERE Fstatus = #{status}
+
+
     </select>
 </mapper>

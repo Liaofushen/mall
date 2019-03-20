@@ -28,6 +28,8 @@ public class Order implements Serializable {
     private Integer receiveAddrId;
     private BigDecimal weightSum;
     private BigDecimal priceSum;
+    private Integer installment;
+    private Integer installmentHavePaid;
     private Integer status;
 
     private List<OrderItem> orderItems;

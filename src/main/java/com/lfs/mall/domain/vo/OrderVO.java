@@ -31,6 +31,8 @@ public class OrderVO implements Serializable {
     private BigDecimal weightSum;
     private BigDecimal priceSum;
     private Integer status;
+    private Integer installment;
+    private Integer installmentHavePaid;
 
     private User user;
     private List<OrderItem> orderItems;

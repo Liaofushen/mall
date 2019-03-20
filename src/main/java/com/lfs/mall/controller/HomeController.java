@@ -52,7 +52,7 @@ public class HomeController {
 
             for (Keyword i : lists) {
                 Category c = categoryMapper.getCategoryById(i.getCategoryId());
-                if (!keyList.containsKey(c.getName())) {
+                if (!keyList.containsKey(c.getName()) && i.getCategoryId() <= 5) {
                     keyList.put(c.getName(), new ArrayList<>());
                 }
 

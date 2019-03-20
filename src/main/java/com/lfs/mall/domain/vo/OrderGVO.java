@@ -21,6 +21,8 @@ public class OrderGVO {
     private BigDecimal weightSum;
     private BigDecimal priceSum;
     private Integer status;
+    private Integer installment;
+    private Integer installmentHavePaid;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date created;
 

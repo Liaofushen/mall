@@ -23,6 +23,7 @@ public interface OrderMapper {
     List<Order> getOrder(Order order);
 
     List<Order> getOrderByUserId(@Param("userId") Integer userId);
+    List<OrderGVO> getOrderByStatus(@Param("status") Integer status);
 
     List<OrderGVO> getOrderByUserIdGVO(Order order);
 }

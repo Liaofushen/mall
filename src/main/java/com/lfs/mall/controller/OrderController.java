@@ -1,11 +1,13 @@
 package com.lfs.mall.controller;
 
-import com.lfs.mall.dao.*;
+import com.lfs.mall.dao.CommodityMapper;
+import com.lfs.mall.dao.OrderItemMapper;
+import com.lfs.mall.dao.OrderMapper;
+import com.lfs.mall.dao.ReceiveAddrMapper;
 import com.lfs.mall.domain.*;
 import com.lfs.mall.domain.vo.OrderGVO;
 import com.lfs.mall.domain.vo.OrderVO;
 import com.lfs.mall.util.ResUtil;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +28,7 @@ public class OrderController {
 
     @PostMapping("/order")
     public Result addOrder(@RequestBody OrderVO orderVO) {
+
         if (session.getAttribute("user") == null) {
 //            User user = new User();
 //            user.setId(2);
@@ -33,6 +36,7 @@ public class OrderController {
 //            session.setAttribute("user", user);
             return ResUtil.error("请先登录");
         }
+
         try {
             orderVO.setId(orderMapper.getMaxId() + 1);
             orderVO.setUser((User) session.getAttribute("user"));
@@ -64,6 +68,9 @@ public class OrderController {
             order.setWeightSum(orderVO.getWeightSum());
             order.setStatus(0);
             order.setReceiveAddrId(orderVO.getReceiveAddr().getId());
+            if (orderVO.getInstallment() != null) {
+                order.setInstallment(orderVO.getInstallment());
+            }
 
             orderMapper.addOrder(order);
 
@@ -108,6 +115,33 @@ public class OrderController {
         return ResUtil.success();
     }
 
+
+    @PostMapping("/order/receive/{orderId}")
+    public Result postReceive(@PathVariable("orderId") Integer orderId) {
+        if (session.getAttribute("user") == null) {
+            return ResUtil.error("请先登录");
+        }
+        User user = (User) session.getAttribute("user");
+
+        Order order = new Order();
+        order.setId(orderId);
+        order.setStatus(3);
+        try {
+            orderMapper.updateOrderStatus(order);
+
+            order.setUserId(user.getId());
+            order.setStatus(null);
+
+            List<OrderGVO> orders = orderMapper.getOrderByUserIdGVO(order);
+            for (OrderGVO orderGVO : orders) {
+                orderGVO.setOrderItems(orderItemMapper.getOrderItemByOrderId(orderGVO.getId()));
+            }
+            return ResUtil.success(orders);
+
+        } catch (Exception ex) {
+            return ResUtil.error(ex.getMessage());
+        }
+    }
 
 
     @GetMapping("/order")

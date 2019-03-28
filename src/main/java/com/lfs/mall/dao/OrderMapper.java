@@ -20,6 +20,8 @@ public interface OrderMapper {
 
     void updateOrderStatus(Order order);
 
+    void updateOrderStatusByOrderId(@Param(("orderId")) Integer orderId);
+
     List<Order> getOrder(Order order);
 
     List<Order> getOrderByUserId(@Param("userId") Integer userId);

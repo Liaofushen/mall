@@ -77,6 +77,15 @@
         where Fid=#{id}
 
     </update>
+    <update id="updateOrderStatusByOrderId" parameterType="java.lang.Integer">
+        update mall_db.t_order
+        <set>
+            Fstatus=#{status},
+            Fupdated=now()
+        </set>
+        where Fid=#{orderId}
+
+    </update>
 
 
     <select id="getOrder" resultMap="order" parameterType="com.lfs.mall.domain.Order">

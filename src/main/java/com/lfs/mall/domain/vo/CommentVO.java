@@ -18,6 +18,7 @@ public class CommentVO implements Serializable {
 
     private static final long serialVersionUID = 4510869431896767536L;
     private Integer id;
+    private Integer orderId;
     private Integer commodityId;
     @JsonIgnore
     private Integer userId;

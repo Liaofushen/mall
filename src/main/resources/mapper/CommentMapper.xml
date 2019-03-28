@@ -4,6 +4,7 @@
 <mapper namespace="com.lfs.mall.dao.CommentMapper">
     <resultMap id="commodity" type="com.lfs.mall.domain.Comment">
         <result column="Fid" property="id"/>
+        <result column="Forder_id" property="orderId"/>
         <result column="Fcommodity_id" property="commodityId"/>
         <result column="Fuser_id" property="userId"/>
         <result column="Fdesc" property="desc"/>
@@ -13,6 +14,7 @@
     </resultMap>
     <resultMap id="commodityVO" type="com.lfs.mall.domain.vo.CommentVO">
         <result column="Fid" property="id"/>
+        <result column="Forder_id" property="orderId"/>
         <result column="Fcommodity_id" property="commodityId"/>
         <result column="Fuser_id" property="userId"/>
         <result column="Fdesc" property="desc"/>
@@ -33,18 +35,19 @@
     </select>
 
     <insert id="addComment" parameterType="com.lfs.mall.domain.Comment">
-        insert into mall_db.t_comment (Fcommodity_id, Fuser_id, Fdesc, Fstar_level, Fcreated, Fupdated) values (
-            #{commodityId},
-            #{userId},
-            #{desc},
-            #{starLevel},
-            now(),
-            now()
-        )
+        insert into mall_db.t_comment (Fcommodity_id, Forder_id, Fuser_id, Fdesc, Fstar_level, Fcreated, Fupdated)
+        values (#{commodityId},
+                #{orderId},
+                #{userId},
+                #{desc},
+                #{starLevel},
+                now(),
+                now())
     </insert>
 
     <delete id="deleteById" parameterType="java.lang.Integer">
-        delete from mall_db.t_comment
-        where Fid=#{id}
+        delete
+        from mall_db.t_comment
+        where Fid = #{id}
     </delete>
 </mapper>

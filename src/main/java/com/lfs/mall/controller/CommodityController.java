@@ -76,25 +76,30 @@ public class CommodityController {
         }
 
         if (comment.getStarLevel() == null) {
-            return ResUtil.error("starLevel为空");
+            return ResUtil.error("starLevel不能为空");
         }
         if (comment.getStarLevel() < 0 || comment.getStarLevel() > 5) {
             return ResUtil.error("starLevel值必须是1~5");
         }
         if (comment.getCommodityId() == null) {
-            return ResUtil.error("commodityId为空");
+            return ResUtil.error("commodityId不能为空");
         }
         if (comment.getDesc() == null) {
-            return ResUtil.error("desc为空");
+            return ResUtil.error("desc不能为空");
+        }
+        if (comment.getOrderId() == null) {
+            return ResUtil.error("orderId不能为空");
         }
 
         User user = (User) session.getAttribute("user");
         try {
             comment.setUserId(user.getId());
             commentMapper.addComment(comment);
-//            Order order = new Order();
-//            order.setId(comment.ge);
-//            orderMapper.updateOrderStatus();
+            Order order = new Order();
+            order.setUserId(user.getId());
+            order.setStatus(4);
+            order.setId(comment.getOrderId());
+            orderMapper.updateOrderStatus(order);
             return ResUtil.success(comment);
         } catch (Exception ex) {
             return ResUtil.error(ex.getMessage());

@@ -1,4 +1,6 @@
-### 查看某目录下的商品：/category/1/commodity
+* 查看某目录下的商品：get /category/1/commodity
+入参：无
+出参：
 ```json
 {
     "status": 0,

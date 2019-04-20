@@ -51,6 +51,11 @@
         from mall_db.t_commodity
         <include refid="common_where"/>
     </select>
+    <select id="getCommodityByCategoryId" resultMap="commodity" parameterType="java.lang.Integer">
+        select *
+        from mall_db.t_commodity
+        where Fcategory_id = #{categoryId}
+    </select>
     <select id="getAllCommodity" resultMap="commodity">
         select *
         from mall_db.t_commodity

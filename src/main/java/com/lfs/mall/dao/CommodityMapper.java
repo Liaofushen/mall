@@ -13,7 +13,10 @@ import java.util.Set;
 public interface CommodityMapper {
     List<Commodity> getAllCommodity();
 
+
     List<Commodity> getCommodity(Commodity commodity);
+
+    List<Commodity> getCommodityByCategoryId(Integer categoryId);
 
     Commodity getCommodityById(@Param("id") Integer id);
 //    CommodityVO getCommodityByIdVO(@Param("id") Integer id);

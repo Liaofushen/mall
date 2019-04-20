@@ -2,6 +2,7 @@ package com.lfs.mall.controller;
 
 import com.lfs.mall.dao.CommodityMapper;
 import com.lfs.mall.dao.KeywordMapper;
+import com.lfs.mall.domain.Commodity;
 import com.lfs.mall.domain.Keyword;
 import com.lfs.mall.domain.Result;
 import com.lfs.mall.util.ResUtil;
@@ -29,6 +30,13 @@ public class CategoryController {
     public Result getCategory(@PathVariable("categoryId") Integer categoryId) {
         List<Keyword> keywordList = keywordMapper.getKeywordByCategoryId(categoryId);
         return ResUtil.success(keywordList);
+    }
+
+    @GetMapping("/category/{categoryId}/commodity")
+    public Result getCommodity(@PathVariable("categoryId") Integer categoryId) {
+
+        List<Commodity> commodityList = commodityMapper.getCommodityByCategoryId(categoryId);
+        return  ResUtil.success(commodityList);
     }
 
     @Autowired

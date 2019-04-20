@@ -1,5 +1,5 @@
-* 查看某目录下的商品：get /category/1/commodity
-入参：无
+* 查看某目录下的商品：get /category/{categoryId}/commodity
+入参：路径里，{categoryId}，商品目录ID
 出参：
 ```json
 {

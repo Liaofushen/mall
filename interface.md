@@ -4,6 +4,7 @@
 入参：路径里，{categoryId}，商品目录ID 
 
 出参：如下
+
 ```json
 {
     "status": 0,

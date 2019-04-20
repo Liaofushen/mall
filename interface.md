@@ -1,4 +1,4 @@
---- 
+
 * 查看某目录下的商品：get /category/{categoryId}/commodity
 
 入参：路径里，{categoryId}，商品目录ID 
@@ -6,6 +6,7 @@
 出参：如下
 
 ```json
+
 {
     "status": 0,
     "message": "success",
@@ -92,6 +93,5 @@
         }
     ]
 }
+
 ```
----
-* test

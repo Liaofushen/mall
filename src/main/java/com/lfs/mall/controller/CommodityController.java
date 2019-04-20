@@ -113,7 +113,7 @@ public class CommodityController {
             double sum = 0;
             for (CommentVO comment : comments) {
                 sum += comment.getStarLevel();
-                comment.setUser(userMapper.getUserByIdVO(comment.getId()));
+                comment.setUser(userMapper.getUserByIdVO(comment.getUserId()));
             }
 
             res.put("avgStarLevel", String.format("%.2f", sum / comments.size()));

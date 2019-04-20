@@ -13,7 +13,7 @@ import java.util.List;
  *
  */
 @Mapper
-@Repository
+    @Repository
 public interface CategoryMapper {
     List<Category> getCategory();
 

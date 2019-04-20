@@ -12,7 +12,6 @@ import java.util.List;
 @Repository
 public interface OrderMapper {
     void addOrder(Order order);
-//    void addOrder(Map map);
 
     Integer getMaxId();
 

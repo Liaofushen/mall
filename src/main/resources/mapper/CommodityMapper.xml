@@ -19,6 +19,23 @@
         <result property="created" column="Fcreated"/>
         <result property="updated" column="Fupdated"/>
     </resultMap>
+    <resultMap id="commodityPo" type="com.lfs.mall.domain.po.CommodityPo">
+        <result property="id" column="Fid"/>
+        <result property="categoryId" column="Fcategory_id"/>
+        <result property="title" column="Ftitle"/>
+        <result property="sellPoint" column="Fsell_point"/>
+        <result property="desc" column="Fdesc"/>
+        <result property="price" column="Fprice"/>
+        <result property="num" column="Fnum"/>
+        <result property="barcode" column="Fbarcode"/>
+        <result property="image" column="Fimage"/>
+        <result property="status" column="Fstatus"/>
+        <result property="weight" column="Fweight"/>
+        <result property="colour" column="Fcolour"/>
+        <result property="size" column="Fsize"/>
+        <result property="created" column="Fcreated"/>
+        <result property="updated" column="Fupdated"/>
+    </resultMap>
     <resultMap id="commodityVO" type="com.lfs.mall.domain.vo.CommodityVO">
         <result property="id" column="Fid"/>
         <result property="title" column="Ftitle"/>
@@ -108,39 +125,54 @@
 
     <insert id="addCommodity" parameterType="com.lfs.mall.dao.CommodityMapper">
         INSERT INTO mall_db.t_commodity (
-            Fid,
-            Fcategory_id,
-            Ftitle,
+
+        Fcategory_id,
+        Ftitle,
+        <if test="sellPoint != null">
             Fsell_point,
-            Fdesc,
-            Fprice,
-            Fnum,
-            Fbarcode,
-            Fimage,
-            Fstatus,
+        </if>
+
+        Fdesc,
+        Fprice,
+        Fnum,
+        Fimage,
+        Fstatus,
+        <if test="weight != null">
             Fweight,
-            Fstatus,
+        </if>
+        <if test="colour != null">
             Fcolour,
+        </if>
+        <if test="size != null">
             Fsize,
-            Fcreated,
-            Fupdated
+        </if>
+        Fcreated,
+        Fupdated
         ) VALUES (
-            #{id},
-            #{categoryId},
-            #{title},
+
+        #{categoryId},
+        #{title},
+        <if test="sellPoint != null">
             #{sellPoint},
-            #{desc},
-            #{price},
-            #{num},
-            #{barcode},
-            #{imgage},
-            #{status},
+        </if>
+
+        #{desc},
+        #{price},
+        #{num},
+        #{image},
+        #{status},
+        <if test="weight != null">
             #{weight},
-            #{status},
+        </if>
+        <if test="colour != null">
             #{colour},
+        </if>
+        <if test="size != null">
             #{size},
-            now(),
-            now()
+        </if>
+
+        now(),
+        now()
         )
     </insert>
 </mapper>

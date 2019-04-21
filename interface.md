@@ -135,3 +135,44 @@
 }
 
 ```
+
+### 添加商品 post /manager/commodity
+
+入参：表单上传，如下，//前缀为非必选  
+``` 
+categoryId:1（下拉列表选择的形式）
+title:添加测试商品
+//sellPoint:添加测试商品
+price:33.33
+num:99
+//weight:200.00
+//size:895*1775*690(mm)
+//color:白色
+//commodity_img：商品图片
+//desc_img：商品详细描述图片
+```
+
+出参：如下
+``` json
+{
+    "status": 0,
+    "message": "success",
+    "data": {
+        "id": null,
+        "categoryId": 1,
+        "title": "添加测试商品",
+        "sellPoint": "添加测试商品",
+        "desc": "/imghub/24f93d8f-2388-4862-84f3-890efd3326ca.jpg\n",
+        "price": 33.33,
+        "num": 99,
+        "barcode": null,
+        "image": "/imghub/1ec8456c-218d-4498-85db-c8fa2e33bc66.jpg",
+        "status": 0,
+        "weight": 200,
+        "colour": null,
+        "size": "895*1775*690(mm)",
+        "created": null,
+        "updated": null
+    }
+}
+```

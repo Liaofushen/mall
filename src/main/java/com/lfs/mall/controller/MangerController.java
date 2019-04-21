@@ -7,11 +7,16 @@ import com.lfs.mall.dao.ReceiveAddrMapper;
 import com.lfs.mall.domain.Commodity;
 import com.lfs.mall.domain.Order;
 import com.lfs.mall.domain.Result;
+import com.lfs.mall.domain.po.CommodityPo;
 import com.lfs.mall.domain.vo.OrderGVO;
+import com.lfs.mall.util.PicUtil;
 import com.lfs.mall.util.ResUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -71,16 +76,52 @@ public class MangerController {
     }
 
     @PostMapping("/commodity")
-    public Result addCommodity(Commodity commodity) {
-        System.out.println(commodity.toString());
+    @Transactional(rollbackFor = Exception.class)
+    public Result addCommodity(CommodityPo commodity,
+                               @RequestParam(value = "commodity_img", required = false) MultipartFile multipartFile,
+                               @RequestParam(value = "desc_img", required = false) List<MultipartFile> multipartFiles) {
+//        System.out.println(commodity.toString());
         if (commodity.getTitle() == null || commodity.getPrice() == null || commodity.getNum() == null) {
             return ResUtil.error("title或price或num不能为空");
         }
+
+        String commodityImg = null;
+        try {
+            commodityImg = PicUtil.save(multipartFile);
+        } catch (IOException e) {
+            return ResUtil.error("commodity_img save error");
+        }
+
+        String descImgs = "";
+        if (multipartFiles != null) {
+            for (MultipartFile file : multipartFiles) {
+                //System.out.println("file: "+file.getName());
+                try {
+                    descImgs = descImgs + PicUtil.save(file) + "\n";
+                } catch (IOException e) {
+                    return ResUtil.error("desc_img save error");
+                }
+            }
+        }
+        // System.out.println(commodityImg);
+//        System.out.println(multipartFile.getName());
+
+        commodity.setImage(commodityImg);
+        commodity.setDesc(descImgs);
+        commodity.setStatus(0);
+
+
+
         commodityMapper.addCommodity(commodity);
-        return null;
+        return ResUtil.success(commodity);
     }
 
-
+    @PostMapping("/test")
+    public Result test(@RequestParam(value = "test", required = false) MultipartFile multipartFile) {
+        if (multipartFile == null) return ResUtil.error("null multipartfile");
+        System.out.println(multipartFile.getName());
+        return ResUtil.success(multipartFile.getName());
+    }
 
 
     @Autowired

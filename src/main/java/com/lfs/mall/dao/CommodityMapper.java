@@ -1,6 +1,7 @@
 package com.lfs.mall.dao;
 
 import com.lfs.mall.domain.Commodity;
+import com.lfs.mall.domain.po.CommodityPo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -27,5 +28,5 @@ public interface CommodityMapper {
 
     void updateCommodity(Commodity commodity);
 
-    void addCommodity(Commodity commodity);
+    void addCommodity(CommodityPo commodity);
 }

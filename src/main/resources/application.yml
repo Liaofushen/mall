@@ -14,9 +14,14 @@ spring:
       url: jdbc:mysql://liaofushen.xyz:3306?useUnicode=true&characterEncoding=UTF-8
       username: remote
       password: 560@lfs
+  servlet:
+    multipart:
+      max-file-size: 256KB
+      max-request-size: 256KB
 
 mybatis:
   type-aliases-package: com.lfs.mall.domain
   mapper-locations: classpath:mapper/*.xml
+
 
 

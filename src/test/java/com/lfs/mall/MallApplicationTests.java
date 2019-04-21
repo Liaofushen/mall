@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Set;
+import java.util.UUID;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -17,10 +18,8 @@ public class MallApplicationTests {
 
     @Test
     public void contextLoads() {
-        Set<Integer> set = orderItemMapper.getCommodityIdByUserId(1);
-        for (Integer i : set) {
-            System.out.println(i);
-        }
+        for (int i = 0; i < 5; i++)
+            System.out.println(UUID.randomUUID());
     }
 
 }

@@ -46,4 +46,6 @@ public class MangerControllerTest {
         ResultActions perform = mvc.perform(request);
         System.out.println(perform.andReturn().getResponse().getContentAsString());
     }
+
+
 }

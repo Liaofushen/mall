@@ -158,17 +158,17 @@ num:99
     "status": 0,
     "message": "success",
     "data": {
-        "id": 44,
+        "id": 45,
         "categoryId": 1,
         "title": "添加测试商品",
         "sellPoint": "添加测试商品",
         "desc": [
-            "/imghub/db78b1e2-5745-4e9e-84a9-e5a62147c75d.jpg"
+            "http://www.liaofushen.xyz:8080/imghub/b98001b8-ef8a-4c7f-bd11-9ef4f6930ff2.jpg"
         ],
         "price": 33.33,
         "num": 99,
         "barcode": null,
-        "image": "/imghub/5e5d8a62-3890-49b1-a42a-19d8bc698c82.jpg",
+        "image": "http://www.liaofushen.xyz:8080/imghub/4e6933c8-9b3f-407a-b2e2-4b72c153b11d.jpg",
         "status": 0,
         "weight": 200,
         "colour": null,

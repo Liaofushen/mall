@@ -9,7 +9,7 @@ import java.util.UUID;
 public class PicUtil {
 
     public static String picDir = "/root/mall/imghub/";
-    private static String url = "/imghub/";
+    private static String url = "http://www.liaofushen.xyz:8080/imghub/";
 
 
     public static String save(MultipartFile file) throws IOException {

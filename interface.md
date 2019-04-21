@@ -1,5 +1,5 @@
 
-* 查看某目录下的商品：get /category/{categoryId}/commodity
+### 查看某目录下的商品：get /category/{categoryId}/commodity
 
 入参：路径里，{categoryId}，商品目录ID   
 出参：如下
@@ -93,7 +93,7 @@
 }
 ```
 
-* 查看目录下拉列表: get /categoryList
+### 查看目录下拉列表: get /categoryList
 
 入参：无  
 出参：如下

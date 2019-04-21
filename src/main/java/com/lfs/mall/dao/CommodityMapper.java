@@ -14,6 +14,8 @@ import java.util.Set;
 public interface CommodityMapper {
     List<Commodity> getAllCommodity();
 
+    Integer getMaxId();
+
 
     List<Commodity> getCommodity(Commodity commodity);
 

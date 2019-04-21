@@ -106,6 +106,7 @@ public class MangerController {
         // System.out.println(commodityImg);
 //        System.out.println(multipartFile.getName());
 
+        commodity.setId(commodityMapper.getMaxId());
         commodity.setImage(commodityImg);
         commodity.setDesc(descImgs);
         commodity.setStatus(0);
@@ -113,7 +114,7 @@ public class MangerController {
 
 
         commodityMapper.addCommodity(commodity);
-        return ResUtil.success(commodity);
+        return ResUtil.success(commodityMapper.getCommodityById(commodity.getId()));
     }
 
     @PostMapping("/test")

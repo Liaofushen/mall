@@ -68,6 +68,10 @@
         from mall_db.t_commodity
         <include refid="common_where"/>
     </select>
+    <select id="getMaxId" resultType="java.lang.Integer">
+        select max(Fid)+1
+        from mall_db.t_commodity
+    </select>
     <select id="getCommodityByCategoryId" resultMap="commodity" parameterType="java.lang.Integer">
         select *
         from mall_db.t_commodity

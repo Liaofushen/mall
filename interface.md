@@ -158,21 +158,21 @@ num:99
     "status": 0,
     "message": "success",
     "data": {
-        "id": null,
+        "id": 44,
         "categoryId": 1,
         "title": "添加测试商品",
         "sellPoint": "添加测试商品",
-        "desc": "/imghub/24f93d8f-2388-4862-84f3-890efd3326ca.jpg\n",
+        "desc": [
+            "/imghub/db78b1e2-5745-4e9e-84a9-e5a62147c75d.jpg"
+        ],
         "price": 33.33,
         "num": 99,
         "barcode": null,
-        "image": "/imghub/1ec8456c-218d-4498-85db-c8fa2e33bc66.jpg",
+        "image": "/imghub/5e5d8a62-3890-49b1-a42a-19d8bc698c82.jpg",
         "status": 0,
         "weight": 200,
         "colour": null,
-        "size": "895*1775*690(mm)",
-        "created": null,
-        "updated": null
+        "size": "895*1775*690(mm)"
     }
 }
 ```

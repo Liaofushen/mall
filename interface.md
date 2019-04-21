@@ -93,7 +93,7 @@
 }
 ```
 
-### 查看目录下拉列表: get /categoryList
+### 查看目录下拉列表: get /category/all
 
 入参：无  
 出参：如下

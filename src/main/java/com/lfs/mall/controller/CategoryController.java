@@ -25,7 +25,7 @@ public class CategoryController {
     private CommodityMapper commodityMapper;
     private KeywordMapper keywordMapper;
 
-    @GetMapping("/categoryList")
+    @GetMapping("/category/all")
     public Result getAllCategory() {
         List<Category> categoryList = categoryMapper.getCategory();
         List<CategoryVo> resList = new ArrayList<>(categoryList.size());

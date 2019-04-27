@@ -176,3 +176,115 @@ num:99
     }
 }
 ```
+
+
+### 购物车页面的推荐商品 get /commodity/recommend/incart
+
+入参：无
+
+
+出参：
+为{string，list<commodity>}对象的数组,
+对象的字段
+recommendReason：推荐原因
+recommendList：这个推荐原因下有以下商品
+如下
+
+``` json
+{
+    "status": 0,
+    "message": "success",
+    "data": [
+        {
+            "recommendReason": "购买了‘Midea/美的 BCD-535WKZM(E)冰箱双开门对开门风冷无霜智能电家用’的用户也购买了下列商品",
+            "recommendList": [
+                {
+                    "id": 1,
+                    "categoryId": 1,
+                    "title": "Midea/美的 BCD-535WKZM(E)冰箱双开门对开门风冷无霜智能电家用",
+                    "sellPoint": "送品牌烤箱，五一大促",
+                    "desc": [
+                        "http://www.liaofushen.xyz:8081/images/1-desc1.jpg",
+                        "http://www.liaofushen.xyz:8081/images/1-desc2.jpg",
+                        "http://www.liaofushen.xyz:8081/images/1-desc3.jpg",
+                        "http://www.liaofushen.xyz:8081/images/1-desc4.jpg"
+                    ],
+                    "price": 3299,
+                    "num": 99,
+                    "barcode": null,
+                    "image": "http://www.liaofushen.xyz:8081/images/1-image.jpg",
+                    "status": 0,
+                    "weight": 43000,
+                    "colour": "银色",
+                    "size": "895*1775*690(mm)"
+                },
+                {
+                    "id": 3,
+                    "categoryId": 1,
+                    "title": "Midea/美的 BCD-535WKZM(E)冰箱双开门对开门风冷无霜智能电家用",
+                    "sellPoint": "送品牌烤箱，五一大促",
+                    "desc": [
+                        "http://www.liaofushen.xyz:8081/images/1-desc1.jpg",
+                        "http://www.liaofushen.xyz:8081/images/1-desc2.jpg",
+                        "http://www.liaofushen.xyz:8081/images/1-desc3.jpg",
+                        "http://www.liaofushen.xyz:8081/images/1-desc4.jpg"
+                    ],
+                    "price": 3299,
+                    "num": 100,
+                    "barcode": null,
+                    "image": "http://www.liaofushen.xyz:8081/images/1-image.jpg",
+                    "status": 0,
+                    "weight": 43000,
+                    "colour": "银色",
+                    "size": "895*1775*690(mm)"
+                }
+            ]
+        },        {
+            "recommendReason": "购买了‘Midea/美的 BCD-535WKZM(E)冰箱双开门对开门风冷无霜智能电家用’的用户也购买了下列商品",
+            "recommendList": [
+                {
+                    "id": 1,
+                    "categoryId": 1,
+                    "title": "Midea/美的 BCD-535WKZM(E)冰箱双开门对开门风冷无霜智能电家用",
+                    "sellPoint": "送品牌烤箱，五一大促",
+                    "desc": [
+                        "http://www.liaofushen.xyz:8081/images/1-desc1.jpg",
+                        "http://www.liaofushen.xyz:8081/images/1-desc2.jpg",
+                        "http://www.liaofushen.xyz:8081/images/1-desc3.jpg",
+                        "http://www.liaofushen.xyz:8081/images/1-desc4.jpg"
+                    ],
+                    "price": 3299,
+                    "num": 99,
+                    "barcode": null,
+                    "image": "http://www.liaofushen.xyz:8081/images/1-image.jpg",
+                    "status": 0,
+                    "weight": 43000,
+                    "colour": "银色",
+                    "size": "895*1775*690(mm)"
+                },
+                {
+                    "id": 3,
+                    "categoryId": 1,
+                    "title": "Midea/美的 BCD-535WKZM(E)冰箱双开门对开门风冷无霜智能电家用",
+                    "sellPoint": "送品牌烤箱，五一大促",
+                    "desc": [
+                        "http://www.liaofushen.xyz:8081/images/1-desc1.jpg",
+                        "http://www.liaofushen.xyz:8081/images/1-desc2.jpg",
+                        "http://www.liaofushen.xyz:8081/images/1-desc3.jpg",
+                        "http://www.liaofushen.xyz:8081/images/1-desc4.jpg"
+                    ],
+                    "price": 3299,
+                    "num": 100,
+                    "barcode": null,
+                    "image": "http://www.liaofushen.xyz:8081/images/1-image.jpg",
+                    "status": 0,
+                    "weight": 43000,
+                    "colour": "银色",
+                    "size": "895*1775*690(mm)"
+                }
+            ]
+        },
+    ]
+}
+
+```

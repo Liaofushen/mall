@@ -40,6 +40,22 @@
         from mall_db.t_user
         <include refid="common_where"/>
     </select>
+    <select id="getRecmd" resultType="com.lfs.mall.domain.Commodity" parameterType="com.lfs.mall.domain.RecmdReqVO">
+
+        select *
+        from mall_db.t_commodity
+        where Fid in (
+            select distinct t6.Fcommodity_id
+            from mall_db.t_order t5
+                     join mall_db.t_order_item t6 on t5.Fid = t6.Forder_id
+            where t6.Fcommodity_id != #{commodityId}
+              and t5.Fuser_id in (select distinct t1.Fid as userId
+                                  from mall_db.t_user t1
+                                           join mall_db.t_order t2 on t1.Fid = t2.Fuser_id
+                                           join mall_db.t_order_item t3 on t2.Fid = t3.Forder_id
+                                  where t1.Fid != #{userId}
+                                    and t3.Fcommodity_id = #{commodityId}))
+    </select>
     <select id="getAllUser" resultMap="user">
         select *
         from mall_db.t_user
@@ -48,34 +64,31 @@
     <select id="getUserById" resultMap="user" parameterType="java.lang.Integer">
         select *
         from mall_db.t_user
-        where Fid=#{id}
+        where Fid = #{id}
     </select>
     <select id="getUserByIdVO" resultMap="userVO" parameterType="java.lang.Integer">
         select *
         from mall_db.t_user
-        where Fid=#{id}
+        where Fid = #{id}
     </select>
 
     <insert id="addUser" parameterType="com.lfs.mall.domain.User">
-        INSERT INTO mall_db.t_user (
-            Fusername,
-            Fpassword,
-            Fsex,
-            Femail,
-            Fphone,
-            Fstatus,
-            Fcreated,
-            Fupdated
-        ) VALUES (
-            #{username},
-            #{password},
-            #{sex},
-            #{email},
-            #{phone},
-            0,
-            now(),
-            now()
-        )
+        INSERT INTO mall_db.t_user (Fusername,
+                                    Fpassword,
+                                    Fsex,
+                                    Femail,
+                                    Fphone,
+                                    Fstatus,
+                                    Fcreated,
+                                    Fupdated)
+        VALUES (#{username},
+                #{password},
+                #{sex},
+                #{email},
+                #{phone},
+                0,
+                now(),
+                now())
     </insert>
 
     <update id="updateUser" parameterType="com.lfs.mall.domain.User">

@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,6 +49,11 @@ public class CommodityController {
         ans.put("installment", installments);
         ans.put("comment", getComments(id));
         return ResUtil.success(ans);
+    }
+
+    @GetMapping("/commodity/recommend/incart")
+    public Result getCartRecmd() {
+        return ResUtil.success(recommendService.getRecommendCommodityInCart());
     }
 
     @GetMapping("/commodity/recommend")

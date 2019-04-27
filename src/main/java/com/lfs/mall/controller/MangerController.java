@@ -4,7 +4,6 @@ import com.lfs.mall.dao.CommodityMapper;
 import com.lfs.mall.dao.OrderItemMapper;
 import com.lfs.mall.dao.OrderMapper;
 import com.lfs.mall.dao.ReceiveAddrMapper;
-import com.lfs.mall.domain.Commodity;
 import com.lfs.mall.domain.Order;
 import com.lfs.mall.domain.Result;
 import com.lfs.mall.domain.po.CommodityPo;
@@ -81,8 +80,9 @@ public class MangerController {
                                @RequestParam(value = "commodity_img", required = false) MultipartFile multipartFile,
                                @RequestParam(value = "desc_img", required = false) List<MultipartFile> multipartFiles) {
 //        System.out.println(commodity.toString());
-        if (commodity.getTitle() == null || commodity.getPrice() == null || commodity.getNum() == null) {
-            return ResUtil.error("title或price或num不能为空");
+        if (commodity.getTitle() == null || commodity.getPrice() == null || commodity.getNum() == null
+        || commodity.getCategoryId() == null) {
+            return ResUtil.error("title或price或num或categoryId不能为空");
         }
 
         String commodityImg = null;
@@ -110,7 +110,6 @@ public class MangerController {
         commodity.setImage(commodityImg);
         commodity.setDesc(descImgs);
         commodity.setStatus(0);
-
 
 
         commodityMapper.addCommodity(commodity);

@@ -2,23 +2,55 @@ package com.lfs.mall.service;
 
 import com.lfs.mall.dao.CommodityMapper;
 import com.lfs.mall.dao.OrderItemMapper;
-import com.lfs.mall.dao.OrderMapper;
 import com.lfs.mall.dao.UserMapper;
 import com.lfs.mall.domain.Commodity;
+import com.lfs.mall.domain.RecmdReqVO;
 import com.lfs.mall.domain.User;
 import com.lfs.mall.domain.vo.EntryVO;
-import com.lfs.mall.domain.vo.RecommendCommodityVO;
+import com.lfs.mall.domain.vo.RecmdToCartVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
 import java.util.*;
 
 @Service
 public class RecommendService {
 
+    private HttpSession session;
     private UserMapper userMapper;
     private OrderItemMapper orderItemMapper;
     private CommodityMapper commodityMapper;
+
+    public List<RecmdToCartVo> getRecommendCommodityInCart() {
+        List<RecmdToCartVo> ret = new ArrayList<>();
+        if (session.getAttribute("cart") == null) {
+            RecmdToCartVo recmdToCartVo = new RecmdToCartVo();
+            recmdToCartVo.setRecommendList(getRecommendCommodity(8));
+            recmdToCartVo.setRecommendReason("为您以下推荐商品");
+            ret.add(recmdToCartVo);
+        } else {
+            Integer userId = -1;
+            if (session.getAttribute("user") != null) {
+                userId = ((User)session.getAttribute("user")).getId();
+            }
+            List<Commodity> cart = (List<Commodity>) session.getAttribute("cart");
+            for (Commodity row : cart) {
+                RecmdReqVO recmdReqVO = new RecmdReqVO();
+                recmdReqVO.setCommodityId(row.getId());
+                recmdReqVO.setUserId(userId);
+
+                List<Commodity> recmd = userMapper.getRecmd(recmdReqVO);
+
+                RecmdToCartVo recmdToCartVo = new RecmdToCartVo();
+                recmdToCartVo.setRecommendReason("购买了"+row.getTitle()+"的用户也购买了下列商品");
+                recmdToCartVo.setRecommendList(recmd);
+
+                ret.add(recmdToCartVo);
+            }
+        }
+        return ret;
+    }
 
     public List<Commodity> getRecommendCommodity(int num) {
         List<Integer> commodityTop = orderItemMapper.getCommodityTop(num);
@@ -53,8 +85,6 @@ public class RecommendService {
         return recommendCommidityList;
 
     }
-
-
 
 
     private List<Integer> getRecommendCommodityIndex(List<Integer> similarUserList, boolean[][] mat, int theUserIndex, int num) {
@@ -136,6 +166,10 @@ public class RecommendService {
         this.userMapper = userMapper;
     }
 
+    @Autowired
+    public void setSession(HttpSession session) {
+        this.session = session;
+    }
 
     @Autowired
     public void setOrderItemMapper(OrderItemMapper orderItemMapper) {

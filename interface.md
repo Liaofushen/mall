@@ -178,16 +178,17 @@ num:99
 ```
 
 
-### 购物车页面的推荐商品 get /commodity/recommend/incart
+### 购物车页面的推荐商品 get /commodity/recommend/incart  
 
 入参：无
 
-
 出参：
-为{string，list<commodity>}对象的数组,
-对象的字段
-recommendReason：推荐原因
-recommendList：这个推荐原因下有以下商品
+
+为{string，list<commodity>}对象的数组,  
+对象的字段：  
+recommendReason：推荐原因    
+recommendList：这个推荐原因下有以下商品  
+
 如下
 
 ``` json

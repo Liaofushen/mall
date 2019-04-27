@@ -22,35 +22,6 @@ public class RecommendService {
     private OrderItemMapper orderItemMapper;
     private CommodityMapper commodityMapper;
 
-    public List<RecmdToCartVo> getRecommendCommodityInCart() {
-        List<RecmdToCartVo> ret = new ArrayList<>();
-        if (session.getAttribute("cart") == null) {
-            RecmdToCartVo recmdToCartVo = new RecmdToCartVo();
-            recmdToCartVo.setRecommendList(getRecommendCommodity(8));
-            recmdToCartVo.setRecommendReason("为您以下推荐商品");
-            ret.add(recmdToCartVo);
-        } else {
-            Integer userId = -1;
-            if (session.getAttribute("user") != null) {
-                userId = ((User)session.getAttribute("user")).getId();
-            }
-            List<Commodity> cart = (List<Commodity>) session.getAttribute("cart");
-            for (Commodity row : cart) {
-                RecmdReqVO recmdReqVO = new RecmdReqVO();
-                recmdReqVO.setCommodityId(row.getId());
-                recmdReqVO.setUserId(userId);
-
-                List<Commodity> recmd = userMapper.getRecmd(recmdReqVO);
-
-                RecmdToCartVo recmdToCartVo = new RecmdToCartVo();
-                recmdToCartVo.setRecommendReason("购买了"+row.getTitle()+"的用户也购买了下列商品");
-                recmdToCartVo.setRecommendList(recmd);
-
-                ret.add(recmdToCartVo);
-            }
-        }
-        return ret;
-    }
 
     public List<Commodity> getRecommendCommodity(int num) {
         List<Integer> commodityTop = orderItemMapper.getCommodityTop(num);

@@ -22,6 +22,24 @@
         <result property="email" column="Femail"/>
         <result property="phone" column="Fphone"/>
     </resultMap>
+    <resultMap id="commodity" type="com.lfs.mall.domain.Commodity">
+        <result property="id" column="Fid"/>
+        <result property="categoryId" column="Fcategory_id"/>
+        <result property="title" column="Ftitle"/>
+        <result property="sellPoint" column="Fsell_point"/>
+        <result property="desc" column="Fdesc"/>
+        <result property="price" column="Fprice"/>
+        <result property="num" column="Fnum"/>
+        <result property="barcode" column="Fbarcode"/>
+        <result property="image" column="Fimage"/>
+        <result property="status" column="Fstatus"/>
+        <result property="weight" column="Fweight"/>
+        <result property="colour" column="Fcolour"/>
+        <result property="size" column="Fsize"/>
+        <result property="created" column="Fcreated"/>
+        <result property="updated" column="Fupdated"/>
+    </resultMap>
+
 
     <sql id="common_where">
         where 1=1
@@ -40,7 +58,7 @@
         from mall_db.t_user
         <include refid="common_where"/>
     </select>
-    <select id="getRecmd" resultType="com.lfs.mall.domain.Commodity" parameterType="com.lfs.mall.domain.RecmdReqVO">
+    <select id="getRecmd" resultMap="commodity" parameterType="com.lfs.mall.domain.RecmdReqVO">
 
         select *
         from mall_db.t_commodity

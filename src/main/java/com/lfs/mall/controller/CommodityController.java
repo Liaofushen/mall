@@ -51,10 +51,7 @@ public class CommodityController {
         return ResUtil.success(ans);
     }
 
-    @GetMapping("/commodity/recommend/incart")
-    public Result getCartRecmd() {
-        return ResUtil.success(recommendService.getRecommendCommodityInCart());
-    }
+
 
     @GetMapping("/commodity/recommend")
     public Result getRecommend() {

@@ -1,13 +1,11 @@
 package com.lfs.mall.controller;
 
-import com.lfs.mall.dao.CommodityMapper;
-import com.lfs.mall.dao.OrderItemMapper;
-import com.lfs.mall.dao.OrderMapper;
-import com.lfs.mall.dao.ReceiveAddrMapper;
+import com.lfs.mall.dao.*;
 import com.lfs.mall.domain.*;
 import com.lfs.mall.domain.vo.OrderGVO;
 import com.lfs.mall.domain.vo.OrderIntstVO;
 import com.lfs.mall.domain.vo.OrderVO;
+import com.lfs.mall.domain.vo.RecmdToCartVo;
 import com.lfs.mall.service.RecommendService;
 import com.lfs.mall.util.InstallmentUtil;
 import com.lfs.mall.util.ResUtil;
@@ -28,6 +26,19 @@ public class OrderController {
     private CommodityMapper commodityMapper;
     private HttpSession session;
     private ReceiveAddrMapper receiveAddrMapper;
+    private RecommendService recommendService;
+
+    private UserMapper userMapper;
+
+    @Autowired
+    public void setUserMapper(UserMapper userMapper) {
+        this.userMapper = userMapper;
+    }
+
+    @Autowired
+    public void setRecommendService(RecommendService recommendService) {
+        this.recommendService = recommendService;
+    }
 
     @PostMapping("/order")
     public Result addOrder(@RequestBody OrderVO orderVO) {
@@ -366,6 +377,37 @@ public class OrderController {
         } catch (Exception ex) {
             return ResUtil.error("无订单数据");
         }
+    }
+
+    @GetMapping("/commodity/recommend/incart")
+    public Result getCartRecmd() {
+        List<RecmdToCartVo> ret = new ArrayList<>();
+        if (session.getAttribute("cart") == null) {
+            RecmdToCartVo recmdToCartVo = new RecmdToCartVo();
+            recmdToCartVo.setRecommendList(recommendService.getRecommendCommodity(8));
+            recmdToCartVo.setRecommendReason("为您推荐以下商品");
+            ret.add(recmdToCartVo);
+        } else {
+            Integer userId = -1;
+            if (session.getAttribute("user") != null) {
+                userId = ((User)session.getAttribute("user")).getId();
+            }
+            List<Commodity> cart = (List<Commodity>) session.getAttribute("cart");
+            for (Commodity row : cart) {
+                RecmdReqVO recmdReqVO = new RecmdReqVO();
+                recmdReqVO.setCommodityId(row.getId());
+                recmdReqVO.setUserId(userId);
+
+                List<Commodity> recmd = userMapper.getRecmd(recmdReqVO);
+
+                RecmdToCartVo recmdToCartVo = new RecmdToCartVo();
+                recmdToCartVo.setRecommendReason("购买了'"+row.getTitle()+"'的用户也购买了下列商品");
+                recmdToCartVo.setRecommendList(recmd);
+
+                ret.add(recmdToCartVo);
+            }
+        }
+        return ResUtil.success(ret);
     }
 
 

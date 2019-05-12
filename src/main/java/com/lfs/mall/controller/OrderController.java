@@ -180,7 +180,8 @@ public class OrderController {
         Map<String, String> res = new HashMap<>();
         try {
             Order order = orderMapper.getOrderById(orderId);
-            if (order.getInstallment().equals(1)) {
+            if (order.getInstallment() == null || order.getInstallment().equals(1)) {
+                order.setInstallment(1);
                 res.put("price", order.getPriceSum().toString());
             } else {
                 Installment installment = InstallmentUtil.getInstallment(order.getPriceSum(), order.getInstallment());
